@@ -1,0 +1,6 @@
+
+(function ($){
+    $.weui = {
+        version: '${version}'
+    };
+})($);
