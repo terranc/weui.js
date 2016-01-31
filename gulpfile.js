@@ -8,7 +8,7 @@ var header = require('gulp-header');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 
-gulp.task('build', function (done){
+gulp.task('build:js', function (done) {
     var banner = [
         '/*!',
         ' * WeUI.js v<%= pkg.version %> (<%= pkg.homepage %>)',
@@ -20,24 +20,32 @@ gulp.task('build', function (done){
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(tap(function (file){
+        .pipe(tap(function (file) {
             var content = file.contents.toString();
             content = content.replace('${version}', pkg.version);
             file.contents = new Buffer(content);
         }))
         .pipe(order([
             'weui.js',
+            'dialog.js',
             '*.js'
         ]))
         .pipe(concat('weui.js'))
         .pipe(header(banner, {pkg: pkg}))
         .pipe(gulp.dest('dist'))
         .pipe(uglify())
-        .pipe(rename(function (path){
+        .pipe(rename(function (path) {
             path.basename += '.min';
         }))
         .pipe(gulp.dest('dist'))
         .on('end', done);
 });
-
-gulp.task('default', ['build']);
+gulp.task('build:example', function (done) {
+    gulp.src('src/example/**/*.*')
+        .pipe(gulp.dest('dist/example'))
+        .on('end', done);
+});
+gulp.task('default', ['build:js', 'build:example']);
+gulp.task('watch', function (){
+    gulp.watch('src/**/*.*', ['default']);
+});

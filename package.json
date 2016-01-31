@@ -2,9 +2,10 @@
     "name": "weui.js",
     "version": "0.0.1",
     "description": "JavaScript for WeUI",
-    "main": "index.js",
+    "main": "dist/weui.js",
     "scripts": {
         "build": "gulp",
+        "dev": "gulp watch",
         "test": "gulp"
     },
     "repository": {

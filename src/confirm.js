@@ -1,28 +1,33 @@
 (function ($) {
     /**
-     * alert
+     * confirm
      * @param {String} content
-     * @param {Object} options
+     * @param {String} options
      * @param {Function} yes
+     * @param {Function} no
      */
-    $.weui.alert = function (content, options, yes) {
+    $.weui.confirm = function (content, options, yes, no) {
 
-        const type = typeof options === 'function';
+        var type = typeof options === 'function';
         if (type) {
+            no = yes;
             yes = options;
         }
 
         options = $.extend({
-            title: '警告',
-            content: content || '警告内容',
+            title: '确认',
+            content: content || '确认内容',
             className: '',
             buttons: [{
+                label: '取消',
+                type: 'default',
+                onClick: no
+            }, {
                 label: '确定',
                 type: 'primary',
                 onClick: yes
             }]
         }, type ? {} : options);
-        options.className = `weui_dialog_alert ${options.className}`;
 
         $.weui.dialog(options);
     };
