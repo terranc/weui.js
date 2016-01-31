@@ -137,6 +137,41 @@
 'use strict';
 
 (function ($) {
+    $.fn.progress = function (options) {
+        var _this = this;
+
+        options = $.extend({
+            value: 0
+        }, options);
+        if (options.value < 0) {
+            options.value = 0;
+        }
+
+        if (options.value > 100) {
+            options.value = 100;
+        }
+
+        var $progress = this.find('.weui_progress_inner_bar');
+        if ($progress.length === 0) {
+            var opr = typeof options.onClick === 'function' ? '<a href="javascript:;" class="weui_progress_opr">\n                    <i class="weui_icon_cancel"></i>\n                </a>' : '';
+            var html = '<div class="weui_progress">\n                <div class="weui_progress_bar">\n                    <div class="weui_progress_inner_bar" style="width: ' + options.value + '%;"></div>\n                </div>\n                ' + opr + '\n            </div>';
+            if (typeof options.onClick === 'function') {
+                this.on('click', '.weui_progress_opr', function () {
+                    options.onClick.call(_this);
+                });
+            }
+            return this.html(html);
+        }
+
+        //return $progress.animate({
+        //    width: `${options.value}%`
+        //}, 100);
+        return $progress.width(options.value + '%');
+    };
+})($);
+'use strict';
+
+(function ($) {
     $.weui.toast = function () {
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'toast' : arguments[0];
         var options = arguments[1];
