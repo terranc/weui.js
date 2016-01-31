@@ -27,6 +27,11 @@ $(function () {
                 }
             }]
         });
+    }).on('click', '#btnToast', function (e) {
+        $.weui.toast('已完成');
+    }).on('click', '#btnLoading', function (e) {
+        $.weui.loading('数据加载中...');
+        setTimeout($.weui.hideLoading, 3000);
     });
 });
 
