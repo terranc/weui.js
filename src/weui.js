@@ -1,5 +1,5 @@
 (function ($) {
     $.weui = {
-        version: '${version}'
+        version: '@VERSION'
     };
 })($);

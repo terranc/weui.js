@@ -17,13 +17,13 @@ gulp.task('build:js', function (done) {
         ' */',
         ''].join('\n');
     gulp.src('src/*.js')
-        .pipe(babel({
-            presets: ['es2015']
-        }))
         .pipe(tap(function (file) {
             var content = file.contents.toString();
-            content = content.replace('${version}', pkg.version);
+            content = content.replace(/@VERSION/g, pkg.version);
             file.contents = new Buffer(content);
+        }))
+        .pipe(babel({
+            presets: ['es2015']
         }))
         .pipe(order([
             'weui.js',
@@ -46,6 +46,6 @@ gulp.task('build:example', function (done) {
         .on('end', done);
 });
 gulp.task('default', ['build:js', 'build:example']);
-gulp.task('watch', function (){
+gulp.task('watch', ['default'], function (){
     gulp.watch('src/**/*.*', ['default']);
 });
