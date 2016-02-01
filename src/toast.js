@@ -1,4 +1,10 @@
 (function ($) {
+
+    /**
+     * show toast
+     * @param {String} content
+     * @param {Object|Number} options
+     */
     $.weui.toast = function (content = 'toast', options) {
 
         if(typeof options === 'number'){

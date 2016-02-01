@@ -21,11 +21,11 @@
             buttons: [{
                 label: '取消',
                 type: 'default',
-                onClick: no
+                onClick: no || $.noop
             }, {
                 label: '确定',
                 type: 'primary',
-                onClick: yes
+                onClick: yes || $.noop
             }]
         }, type ? {} : options);
 

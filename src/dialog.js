@@ -2,6 +2,10 @@
 
     let $dialog = null;
 
+    /**
+     *  weui dialog
+     * @param {Object} options
+     */
     $.weui.dialog = function (options) {
         options = $.extend({
             title: '标题',
@@ -43,6 +47,9 @@
         });
     };
 
+    /**
+     * close dialog
+     */
     $.weui.closeDialog = function () {
         if ($dialog) {
             $dialog.off('click', '.weui_btn_dialog');

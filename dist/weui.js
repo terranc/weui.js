@@ -16,6 +16,10 @@
 
     var $dialog = null;
 
+    /**
+     *  weui dialog
+     * @param {Object} options
+     */
     $.weui.dialog = function (options) {
         options = $.extend({
             title: '标题',
@@ -42,6 +46,9 @@
         });
     };
 
+    /**
+     * close dialog
+     */
     $.weui.closeDialog = function () {
         if ($dialog) {
             $dialog.off('click', '.weui_btn_dialog');
@@ -106,11 +113,11 @@
             buttons: [{
                 label: '取消',
                 type: 'default',
-                onClick: no
+                onClick: no || $.noop
             }, {
                 label: '确定',
                 type: 'primary',
-                onClick: yes
+                onClick: yes || $.noop
             }]
         }, type ? {} : options);
 
@@ -121,6 +128,11 @@
 
 (function ($) {
     var $loading = null;
+
+    /**
+     * show loading
+     * @param {String} content
+     */
     $.weui.loading = function () {
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'loading...' : arguments[0];
 
@@ -129,6 +141,9 @@
         $('body').append($loading);
     };
 
+    /**
+     * hide loading
+     */
     $.weui.hideLoading = function () {
         $loading && $loading.remove();
         $loading = null;
@@ -172,6 +187,12 @@
 'use strict';
 
 (function ($) {
+
+    /**
+     * show toast
+     * @param {String} content
+     * @param {Object|Number} options
+     */
     $.weui.toast = function () {
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'toast' : arguments[0];
         var options = arguments[1];

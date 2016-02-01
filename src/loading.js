@@ -1,5 +1,10 @@
 (function ($) {
     let $loading = null;
+
+    /**
+     * show loading
+     * @param {String} content
+     */
     $.weui.loading = function (content = 'loading...') {
         const html = `<div class="weui_loading_toast">
         <div class="weui_mask_transparent"></div>
@@ -25,6 +30,9 @@
         $('body').append($loading);
     };
 
+    /**
+     * hide loading
+     */
     $.weui.hideLoading = function () {
         $loading && $loading.remove();
         $loading = null;
