@@ -32,6 +32,8 @@ $(function () {
     }).on('click', '#btnLoading', function (e) {
         $.weui.loading('数据加载中...');
         setTimeout($.weui.hideLoading, 3000);
+    }).on('click', '#btnTopTips', function (e) {
+        $.weui.topTips('格式不对');
     });
 });
 
