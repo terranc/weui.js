@@ -60,6 +60,64 @@
 'use strict';
 
 (function ($) {
+
+    var $actionSheetWrapper = null;
+
+    /**
+     * show actionSheet
+     * @param {Array} items
+     */
+    $.weui.actionSheet = function () {
+        var items = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+        var cells = items.map(function (item, idx) {
+            return '<div class="weui_actionsheet_cell">' + item.label + '</div>';
+        }).join('');
+        var html = '<div>\n            <div class="weui_mask_transition"></div>\n            <div class="weui_actionsheet">\n                <div class="weui_actionsheet_menu">\n                    ' + cells + '\n                </div>\n                <div class="weui_actionsheet_action">\n                    <div class="weui_actionsheet_cell">取消</div>\n                </div>\n            </div>\n        </div>';
+
+        $actionSheetWrapper = $(html);
+        $('body').append($actionSheetWrapper);
+
+        // add class
+        $actionSheetWrapper.find('.weui_mask_transition').show().addClass('weui_fade_toggle');
+        $actionSheetWrapper.find('.weui_actionsheet').addClass('weui_actionsheet_toggle');
+
+        // bind event
+        $actionSheetWrapper.on('click', '.weui_actionsheet .weui_actionsheet_cell', function () {
+            var item = items[$(this).index()];
+            var cb = item.onClick || $.noop;
+            cb.call();
+            $.weui.hideActionSheet();
+        }).on('click', '.weui_mask_transition', function () {
+            $.weui.hideActionSheet();
+        }).on('click', '.weui_actionsheet_action .weui_actionsheet_cell', function () {
+            $.weui.hideActionSheet();
+        });
+    };
+
+    $.weui.hideActionSheet = function () {
+        if (!$actionSheetWrapper) {
+            return;
+        }
+
+        var $mask = $actionSheetWrapper.find('.weui_mask_transition');
+        var $actionsheet = $actionSheetWrapper.find('.weui_actionsheet');
+
+        $mask.removeClass('weui_fade_toggle');
+        $actionsheet.removeClass('weui_actionsheet_toggle');
+
+        $actionsheet.on('transitionend', function () {
+            $actionSheetWrapper.remove();
+            $actionSheetWrapper = null;
+        }).on('webkitTransitionEnd', function () {
+            $actionSheetWrapper.remove();
+            $actionSheetWrapper = null;
+        });
+    };
+})($);
+'use strict';
+
+(function ($) {
     /**
      * alert
      * @param {String} content

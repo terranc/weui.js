@@ -34,6 +34,23 @@ $(function () {
         setTimeout($.weui.hideLoading, 3000);
     }).on('click', '#btnTopTips', function (e) {
         $.weui.topTips('格式不对');
+    }).on('click', '#btnActionSheet', function (e) {
+        $.weui.actionSheet([{
+            label: '示例菜单',
+            onClick: function (){
+                console.log('click1');
+            }
+        },{
+            label: '示例菜单',
+            onClick: function (){
+                console.log('click2');
+            }
+        },{
+            label: '示例菜单',
+            onClick: function (){
+                console.log('click3');
+            }
+        }]);
     });
 });
 
