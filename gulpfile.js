@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var header = require('gulp-header');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var browserSync = require('browser-sync');
 
 gulp.task('build:js', function (done) {
     var banner = [
@@ -46,7 +47,20 @@ gulp.task('build:example', function (done) {
         .pipe(gulp.dest('dist/example'))
         .on('end', done);
 });
-gulp.task('default', ['build:js', 'build:example']);
+gulp.task('default', ['build:js', 'build:example'], function(){
+    browserSync.reload();
+});
 gulp.task('watch', ['default'], function (){
+    gulp.start('server');
     gulp.watch('src/**/*.*', ['default']);
+});
+
+gulp.task('server', function () {
+    browserSync.init({
+        server: {
+            baseDir: "./dist"
+        },
+        port: 8080,
+        startPath: '/example'
+    });
 });
