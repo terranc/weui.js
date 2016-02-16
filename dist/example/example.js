@@ -77,7 +77,7 @@ $(function () {
     });
 
     // 为表单加入检测功能：当required的元素blur时校验，并弹出错误提示
-    var $form = $("#form");
+    var $form = $(".form");
     $form.form();
 
     // 表单校验：并返回错误的$dom和对应的错误信息
@@ -86,7 +86,7 @@ $(function () {
             if(error){
                 var $dom = error.$dom, msg = error.msg,
                     tips =
-                        $dom.attr(error + "Tips")
+                        $dom.attr(msg + "Tips")
                         || $dom.attr("tips")
                         || $dom.attr("placeholder");
                 if(tips) $.weui.topTips(tips);
