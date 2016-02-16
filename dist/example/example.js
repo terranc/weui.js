@@ -75,5 +75,15 @@ $(function () {
             setTimeout(uploading, 10);
         }
     });
+
+    // 为表单加入检测功能，当required的元素blur时校验，并弹出错误提示
+    var $form = $("#form");
+    $form.form();
+
+    // 表单校验，并返回错误的$dom和对应的错误信息
+    $("#formSubmitBtn").on("click", function(){
+        var error = $form.validate();
+        console.log(error);
+    });
 });
 
