@@ -245,19 +245,25 @@
     }
 
     $.fn.form = function () {
-        var $form = $(this);
-        $form.find("[required]").on("blur", function () {
-            var $this = $(this),
-                error = _validate($this);
-            if (error) {
-                var tips = $this.attr(error + "Tips") || $this.attr("tips") || $this.attr("placeholder");
-                if (tips) $.weui.topTips(tips);
-                $this.parents(".weui_cell").addClass("weui_cell_warn");
-            }
-        }).on("focus", function () {
-            var $this = $(this);
-            $this.parents(".weui_cell").removeClass("weui_cell_warn");
+        $.each(this, function (index, ele) {
+            var $form = $(ele);
+            $form.find("[required]").on("blur", function () {
+                var $this = $(this),
+                    errorMsg;
+                if ($this.val().length < 1) return; // 当空的时候不校验，以防不断弹出toptips
+
+                errorMsg = _validate($this);
+                if (errorMsg) {
+                    var tips = $this.attr(errorMsg + "Tips") || $this.attr("tips") || $this.attr("placeholder");
+                    if (tips) $.weui.topTips(tips);
+                    $this.parents(".weui_cell").addClass("weui_cell_warn");
+                }
+            }).on("focus", function () {
+                var $this = $(this);
+                $this.parents(".weui_cell").removeClass("weui_cell_warn");
+            });
         });
+        return this;
     };
 
     $.fn.validate = function (callback) {
@@ -270,10 +276,10 @@
                     $dom: $dom,
                     msg: error
                 });
-            } else {
-                callback(null);
+                break;
             }
         }
+        callback(null);
         return this;
     };
 })();

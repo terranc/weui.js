@@ -86,7 +86,7 @@ $(function () {
             if(error){
                 var $dom = error.$dom, msg = error.msg,
                     tips =
-                        $dom.attr(error + "Tips")
+                        $dom.attr(msg + "Tips")
                         || $dom.attr("tips")
                         || $dom.attr("placeholder");
                 if(tips) $.weui.topTips(tips);
