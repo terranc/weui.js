@@ -228,15 +228,23 @@
  */
 (function () {
     function _validate($input) {
-        var reg = $input[0].getAttribute("required") || $input[0].getAttribute("pattern") || "";
+        var input = $input[0],
+            val = $input.val();
 
-        if (reg) {
-            // 有正则表达式时 要符合正则
-            if (new RegExp(reg).test($input.val())) return null;else return "notMatch";
-        } else if ($input[0].getAttribute("type") == "checkbox" || $input[0].getAttribute("type") == "radio") {
+        if (input.tagName == "INPUT" || input.tagName == "TEXTAREA") {
+            var reg = input.getAttribute("required") || input.getAttribute("pattern") || "";
+
+            if (!$input.val().length) {
+                return "empty";
+            } else if (reg) {
+                return new RegExp(reg).test(val) ? null : "notMatch";
+            } else {
+                return null;
+            }
+        } else if (input.getAttribute("type") == "checkbox" || input.getAttribute("type") == "radio") {
             // 没有正则表达式：checkbox/radio要checked
-            return $input[0].checked ? null : "empty";
-        } else if ($input.val().length) {
+            return input.checked ? null : "empty";
+        } else if (val.length) {
             // 有输入值
             return null;
         }
