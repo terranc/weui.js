@@ -52,5 +52,12 @@ $(function () {
             }
         }]);
     });
+
+    $('#uploader').uploader({
+        maxCount: 5,
+        onChange: function (file){
+            console.log(file);
+        }
+    });
 });
 

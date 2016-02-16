@@ -255,6 +255,7 @@
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'toast' : arguments[0];
         var options = arguments[1];
 
+
         if (typeof options === 'number') {
             options = {
                 duration: options
@@ -289,6 +290,7 @@
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'topTips' : arguments[0];
         var options = arguments[1];
 
+
         if ($topTips) {
             return;
         }
@@ -312,5 +314,66 @@
         }, options.duration);
     };
 })($);
-// 过完年回来再写
-"use strict";
+'use strict';
+
+(function ($) {
+    $.fn.uploader = function (options) {
+        options = $.extend({
+            title: '图片上传',
+            maxCount: -1,
+            onChange: $.noop
+        }, options);
+
+        var html = '<div class="weui_uploader">\n                        <div class="weui_uploader_hd weui_cell">\n                            <div class="weui_cell_bd weui_cell_primary">' + options.title + '</div>\n                            <div class="weui_cell_ft">0/' + options.maxCount + '</div>\n                        </div>\n                        <div class="weui_uploader_bd">\n                            <ul class="weui_uploader_files">\n                            </ul>\n                            <div class="weui_uploader_input_wrp">\n                                <input class="weui_uploader_input" type="file" accept="image/jpg,image/jpeg,image/png,image/gif">\n                            </div>\n                        </div>\n                    </div>';
+        this.html(html);
+
+        var $uploader = this;
+        var $files = this.find('.weui_uploader_files');
+        var $file = this.find('.weui_uploader_input');
+        $file.on('change', function (event) {
+            var files = event.target.files;
+
+            // 如果没有选中文件，直接返回
+            if (files.length === 0) {
+                return;
+            }
+
+            $.each(files, function (idx, file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = new Image();
+                    img.onload = function () {
+                        // 不要超出最大宽度
+                        var w = Math.min(300, img.width);
+                        // 高度按比例计算
+                        var h = img.height * (w / img.width);
+                        var canvas = document.createElement('canvas');
+                        var ctx = canvas.getContext('2d');
+                        // 设置 canvas 的宽度和高度
+                        canvas.width = w;
+                        canvas.height = h;
+                        ctx.drawImage(img, 0, 0, w, h);
+                        var base64 = canvas.toDataURL('image/png');
+
+                        $files.append('<li class="weui_uploader_file" style="background-image:url(' + base64 + ')"></li>');
+
+                        // 插入到预览区
+                        options.onChange.call($uploader, {
+                            lastModified: file.lastModified,
+                            lastModifiedDate: file.lastModifiedDate,
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                            data: base64
+                        });
+                    };
+
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        return this;
+    };
+})($);
