@@ -30,6 +30,7 @@ gulp.task('build:js', function (done) {
             'weui.js',
             'dialog.js',
             'alert.js',
+            'toptips.js',
             '*.js'
         ]))
         .pipe(concat('weui.js'))

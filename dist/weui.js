@@ -92,6 +92,45 @@
 
 (function ($) {
 
+    var $topTips = null;
+
+    /**
+     * show top tips
+     * @param {String} content
+     * @param {Object|Number} options
+     */
+    $.weui.topTips = function () {
+        var content = arguments.length <= 0 || arguments[0] === undefined ? 'topTips' : arguments[0];
+        var options = arguments[1];
+
+
+        if ($topTips) {
+            return;
+        }
+
+        if (typeof options === 'number') {
+            options = {
+                duration: options
+            };
+        }
+
+        options = $.extend({
+            duration: 3000
+        }, options);
+        var html = '<div class="weui_toptips weui_warn" style="display: block;">' + content + '</div>';
+        $topTips = $(html);
+        $('body').append($topTips);
+
+        setTimeout(function () {
+            $topTips.remove();
+            $topTips = null;
+        }, options.duration);
+    };
+})($);
+'use strict';
+
+(function ($) {
+
     var $actionSheetWrapper = null;
 
     /**
@@ -182,6 +221,62 @@
         $.weui.dialog(options);
     };
 })($);
+"use strict";
+
+/**
+ * Created by bearyan on 2016/2/16.
+ */
+(function () {
+    function _validate($input) {
+        var reg = $input[0].getAttribute("required") || $input[0].getAttribute("pattern") || "";
+
+        if (reg) {
+            // 有正则表达式时 要符合正则
+            if (new RegExp(reg).test($input.val())) return null;else return "notMatch";
+        } else if ($input[0].getAttribute("type") == "checkbox" || $input[0].getAttribute("type") == "radio") {
+            // 没有正则表达式：checkbox/radio要checked
+            return $input[0].checked ? null : "empty";
+        } else if ($input.val().length) {
+            // 有输入值
+            return null;
+        }
+
+        return "empty";
+    }
+
+    function _validateAll() {
+        var $requireds = $(this).find("[required]");
+        for (var i = 0, len = $requireds.length; i < len; ++i) {
+            var $dom = $requireds.eq(i),
+                error = _validate($dom);
+            if (error) {
+                return {
+                    $dom: $dom,
+                    msg: error
+                };
+            }
+        }
+        return null;
+    }
+
+    $.fn.form = function () {
+        var $form = $(this);
+        $form.find("[required]").on("blur", function () {
+            var $this = $(this),
+                error = _validate($this);
+            if (error) {
+                var tips = $this.attr(error + "Tips") || $this.attr("tips") || $this.attr("placeholder");
+                if (tips) $.weui.topTips(tips);
+                $this.parents(".weui_cell").addClass("weui_cell_warn");
+            }
+        }).on("focus", function () {
+            var $this = $(this);
+            $this.parents(".weui_cell").removeClass("weui_cell_warn");
+        });
+    };
+
+    $.fn.validate = _validateAll;
+})();
 'use strict';
 
 (function ($) {
@@ -272,45 +367,6 @@
         setTimeout(function () {
             $toast.remove();
             $toast = null;
-        }, options.duration);
-    };
-})($);
-'use strict';
-
-(function ($) {
-
-    var $topTips = null;
-
-    /**
-     * show top tips
-     * @param {String} content
-     * @param {Object|Number} options
-     */
-    $.weui.topTips = function () {
-        var content = arguments.length <= 0 || arguments[0] === undefined ? 'topTips' : arguments[0];
-        var options = arguments[1];
-
-
-        if ($topTips) {
-            return;
-        }
-
-        if (typeof options === 'number') {
-            options = {
-                duration: options
-            };
-        }
-
-        options = $.extend({
-            duration: 3000
-        }, options);
-        var html = '<div class="weui_toptips weui_warn" style="display: block;">' + content + '</div>';
-        $topTips = $(html);
-        $('body').append($topTips);
-
-        setTimeout(function () {
-            $topTips.remove();
-            $topTips = null;
         }, options.duration);
     };
 })($);
