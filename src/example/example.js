@@ -82,16 +82,17 @@ $(function () {
 
     // 表单校验：并返回错误的$dom和对应的错误信息
     $("#formSubmitBtn").on("click", function(){
-        var error = $form.validate();
-        if(error){
-            var $dom = error.$dom, msg = error.msg,
-                tips =
-                $dom.attr(error + "Tips")
-                || $dom.attr("tips")
-                || $dom.attr("placeholder");
-            if(tips) $.weui.topTips(tips);
-            $dom.parents(".weui_cell").addClass("weui_cell_warn");
-        }
+        $form.validate(function (error){
+            if(error){
+                var $dom = error.$dom, msg = error.msg,
+                    tips =
+                        $dom.attr(error + "Tips")
+                        || $dom.attr("tips")
+                        || $dom.attr("placeholder");
+                if(tips) $.weui.topTips(tips);
+                $dom.parents(".weui_cell").addClass("weui_cell_warn");
+            }
+        });
     });
 });
 

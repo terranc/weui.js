@@ -1,26 +1,26 @@
 /**
  * Created by bearyan on 2016/2/16.
  */
-(function(){
-    function _validate($input){
+(function () {
+    function _validate($input) {
         var reg =
             $input[0].getAttribute("required")
             || $input[0].getAttribute("pattern")
             || "";
 
-        if(reg){
+        if (reg) {
             // 有正则表达式时 要符合正则
-            if(new RegExp(reg).test($input.val())) return null;
+            if (new RegExp(reg).test($input.val())) return null;
             else return "notMatch";
         }
-        else if(
+        else if (
             $input[0].getAttribute("type") == "checkbox"
             || $input[0].getAttribute("type") == "radio"
-        ){
+        ) {
             // 没有正则表达式：checkbox/radio要checked
             return $input[0].checked ? null : "empty";
         }
-        else if($input.val().length){
+        else if ($input.val().length) {
             // 有输入值
             return null;
         }
@@ -28,40 +28,41 @@
         return "empty";
     }
 
-    function _validateAll(){
-        var $requireds = $(this).find("[required]");
-        for(var i = 0, len = $requireds.length; i < len; ++i){
-            var $dom = $requireds.eq(i), error = _validate($dom);
-            if(error){
-                return {
-                    $dom: $dom,
-                    msg: error
-                }
-            }
-        }
-        return null;
-    }
-
-    $.fn.form = function(){
+    $.fn.form = function () {
         var $form = $(this);
         $form.find("[required]")
-            .on("blur", function(){
+            .on("blur", function () {
                 var $this = $(this), error = _validate($this);
-                if(error){
+                if (error) {
                     var tips =
                         $this.attr(error + "Tips")
                         || $this.attr("tips")
                         || $this.attr("placeholder");
-                    if(tips) $.weui.topTips(tips);
+                    if (tips) $.weui.topTips(tips);
                     $this.parents(".weui_cell").addClass("weui_cell_warn");
                 }
             })
-            .on("focus", function(){
+            .on("focus", function () {
                 var $this = $(this);
                 $this.parents(".weui_cell").removeClass("weui_cell_warn");
             })
         ;
     };
 
-    $.fn.validate = _validateAll;
+    $.fn.validate = function (callback) {
+        var $requireds = $(this).find("[required]");
+        for (var i = 0, len = $requireds.length; i < len; ++i) {
+            var $dom = $requireds.eq(i), error = _validate($dom);
+            if (error) {
+                callback({
+                    $dom: $dom,
+                    msg: error
+                });
+            }
+            else {
+                callback(null);
+            }
+        }
+        return this;
+    };
 })();

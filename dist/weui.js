@@ -244,21 +244,6 @@
         return "empty";
     }
 
-    function _validateAll() {
-        var $requireds = $(this).find("[required]");
-        for (var i = 0, len = $requireds.length; i < len; ++i) {
-            var $dom = $requireds.eq(i),
-                error = _validate($dom);
-            if (error) {
-                return {
-                    $dom: $dom,
-                    msg: error
-                };
-            }
-        }
-        return null;
-    }
-
     $.fn.form = function () {
         var $form = $(this);
         $form.find("[required]").on("blur", function () {
@@ -275,7 +260,22 @@
         });
     };
 
-    $.fn.validate = _validateAll;
+    $.fn.validate = function (callback) {
+        var $requireds = $(this).find("[required]");
+        for (var i = 0, len = $requireds.length; i < len; ++i) {
+            var $dom = $requireds.eq(i),
+                error = _validate($dom);
+            if (error) {
+                callback({
+                    $dom: $dom,
+                    msg: error
+                });
+            } else {
+                callback(null);
+            }
+        }
+        return this;
+    };
 })();
 'use strict';
 
