@@ -28,6 +28,7 @@ gulp.task('build:js', function (done) {
         .pipe(order([
             'weui.js',
             'dialog.js',
+            'alert.js',
             '*.js'
         ]))
         .pipe(concat('weui.js'))

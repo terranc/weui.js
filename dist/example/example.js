@@ -16,13 +16,13 @@ $(function () {
             buttons: [{
                 label: '知道了',
                 type: 'default',
-                onClick: function (){
+                onClick: function () {
                     console.log('知道了......');
                 }
             }, {
                 label: '好的',
                 type: 'primary',
-                onClick: function (){
+                onClick: function () {
                     console.log('好的......');
                 }
             }]
@@ -37,26 +37,42 @@ $(function () {
     }).on('click', '#btnActionSheet', function (e) {
         $.weui.actionSheet([{
             label: '示例菜单',
-            onClick: function (){
+            onClick: function () {
                 console.log('click1');
             }
-        },{
+        }, {
             label: '示例菜单',
-            onClick: function (){
+            onClick: function () {
                 console.log('click2');
             }
-        },{
+        }, {
             label: '示例菜单',
-            onClick: function (){
+            onClick: function () {
                 console.log('click3');
             }
         }]);
     });
 
     $('#uploader').uploader({
-        maxCount: 5,
-        onChange: function (file){
-            console.log(file);
+        maxCount: 2,
+        onChange: function (file) {
+            // uploading....
+            var progress = 0;
+            var self = this;
+
+            function uploading() {
+                progress = ++progress % 100;
+                self.update(progress);
+
+                if (progress === 99) {
+                    self.success();
+                }
+                else {
+                    setTimeout(uploading, 10);
+                }
+            }
+
+            setTimeout(uploading, 10);
         }
     });
 });
