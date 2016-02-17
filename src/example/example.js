@@ -80,19 +80,10 @@ $(function () {
     var $form = $("#form");
     $form.form();
 
-    // 表单校验：并返回错误的$dom和对应的错误信息
+    // 表单校验
     $("#formSubmitBtn").on("click", function(){
-        $form.validate(function (error){
-            if(error){
-                var $dom = error.$dom, msg = error.msg,
-                    tips =
-                        $dom.attr(msg + "Tips")
-                        || $dom.attr("tips")
-                        || $dom.attr("placeholder");
-                if(tips) $.weui.topTips(tips);
-                $dom.parents(".weui_cell").addClass("weui_cell_warn");
-            }
-        });
+        $form.validate();
+        // $form.validate(function(error){ console.log(error);}); // error: {$dom:[$Object], msg:[String]}
     });
 });
 

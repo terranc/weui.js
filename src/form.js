@@ -32,6 +32,17 @@
 
         return "empty";
     }
+    function _showErrorMsg(error){
+        if(error){
+            var $dom = error.$dom, msg = error.msg,
+                tips =
+                    $dom.attr(msg + "Tips")
+                    || $dom.attr("tips")
+                    || $dom.attr("placeholder");
+            if(tips) $.weui.topTips(tips);
+            $dom.parents(".weui_cell").addClass("weui_cell_warn");
+        }
+    }
 
     $.fn.form = function(){
         $.each(this, function(index, ele){
@@ -43,12 +54,10 @@
 
                     errorMsg = _validate($this);
                     if(errorMsg){
-                        var tips =
-                            $this.attr(errorMsg + "Tips")
-                            || $this.attr("tips")
-                            || $this.attr("placeholder");
-                        if(tips) $.weui.topTips(tips);
-                        $this.parents(".weui_cell").addClass("weui_cell_warn");
+                        _showErrorMsg({
+                            $dom: $this,
+                            msg: errorMsg
+                        });
                     }
                 })
                 .on("focus", function(){
@@ -62,12 +71,14 @@
 
     $.fn.validate = function(callback){
         var $requireds = $(this).find("[required]");
+        if(typeof callback != "function") callback = _showErrorMsg;
+
         for(var i = 0, len = $requireds.length; i < len; ++i){
-            var $dom = $requireds.eq(i), error = _validate($dom);
-            if(error){
+            var $dom = $requireds.eq(i), errorMsg = _validate($dom);
+            if(errorMsg){
                 callback({
                     $dom: $dom,
-                    msg: error
+                    msg: errorMsg
                 });
                 break;
             }
