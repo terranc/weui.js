@@ -262,7 +262,7 @@
     }
 
     $.fn.form = function () {
-        $.each(this, function (index, ele) {
+        return this.each(function (index, ele) {
             var $form = $(ele);
             $form.find("[required]").on("blur", function () {
                 var $this = $(this),
@@ -281,26 +281,26 @@
                 $this.parents(".weui_cell").removeClass("weui_cell_warn");
             });
         });
-        return this;
     };
 
     $.fn.validate = function (callback) {
-        var $requireds = $(this).find("[required]");
-        if (typeof callback != "function") callback = _showErrorMsg;
+        return this.each(function () {
+            var $requireds = $(this).find("[required]");
+            if (typeof callback != "function") callback = _showErrorMsg;
 
-        for (var i = 0, len = $requireds.length; i < len; ++i) {
-            var $dom = $requireds.eq(i),
-                errorMsg = _validate($dom);
-            if (errorMsg) {
-                callback({
-                    $dom: $dom,
-                    msg: errorMsg
-                });
-                break;
+            for (var i = 0, len = $requireds.length; i < len; ++i) {
+                var $dom = $requireds.eq(i),
+                    errorMsg = _validate($dom);
+                if (errorMsg) {
+                    callback({
+                        $dom: $dom,
+                        msg: errorMsg
+                    });
+                    break;
+                }
             }
-        }
-        callback(null);
-        return this;
+            callback(null);
+        });
     };
 })();
 'use strict';
