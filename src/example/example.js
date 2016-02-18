@@ -54,25 +54,34 @@ $(function () {
     });
 
     $('#uploader').uploader({
-        maxCount: 2,
+        maxCount: 4,
         onChange: function (file) {
-            // uploading....
-            var progress = 0;
-            var self = this;
-
-            function uploading() {
-                progress = ++progress % 100;
-                self.update(progress);
-
-                if (progress === 99) {
-                    self.success();
+            var update = this.update;
+            var success = this.success;
+            var error = this.error;
+            $.ajax({
+                type: 'POST',
+                url: '/api/v1/upload?format=base64',
+                data: {
+                    data: file.data
+                },
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.addEventListener('progress', function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            update(percentComplete + '%');
+                        }
+                    }, false);
+                    return xhr;
+                },
+                success: function(res){
+                    success();
+                },
+                error: function (err){
+                    error();
                 }
-                else {
-                    setTimeout(uploading, 10);
-                }
-            }
-
-            setTimeout(uploading, 10);
+            });
         }
     });
 

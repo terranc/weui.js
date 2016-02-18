@@ -463,10 +463,10 @@
             });
         });
 
-        this.update = function (progress) {
+        this.update = function (msg) {
             var $preview = $files.find('.weui_uploader_file').last();
             $preview.addClass('weui_uploader_status');
-            $preview.html('<div class="weui_uploader_status_content">' + progress + '%</div>');
+            $preview.html('<div class="weui_uploader_status_content">' + msg + '</div>');
         };
 
         this.success = function () {
