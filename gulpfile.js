@@ -51,8 +51,7 @@ gulp.task('build:example', function (done) {
 gulp.task('default', ['build:js', 'build:example'], function(){
     browserSync.reload();
 });
-gulp.task('watch', ['default'], function (){
-    gulp.start('server');
+gulp.task('watch', ['default', 'server'], function (){
     gulp.watch('src/**/*.*', ['default']);
 });
 

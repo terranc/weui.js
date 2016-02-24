@@ -103,7 +103,6 @@
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'topTips' : arguments[0];
         var options = arguments[1];
 
-
         if ($topTips) {
             return;
         }
@@ -375,7 +374,6 @@
     $.weui.toast = function () {
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'toast' : arguments[0];
         var options = arguments[1];
-
 
         if (typeof options === 'number') {
             options = {
