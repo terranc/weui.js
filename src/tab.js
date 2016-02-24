@@ -1,0 +1,30 @@
+(function ($) {
+    $.fn.tab = function (options){
+        options = $.extend({
+            defaultIndex: 0,
+            activeClass: `active`
+        });
+        const $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
+        const $tabBdItems = this.find('.weui_tab_bd_item');
+
+        this.toggle = function (index){
+            const $defaultTabbarItem = $tabbarItems.eq(index);
+            $defaultTabbarItem.addClass(options.activeClass).siblings().removeClass(options.activeClass);
+
+            const $defaultTabBdItem = $tabBdItems.eq(index);
+            $defaultTabBdItem.addClass(options.activeClass).show().siblings().removeClass(options.activeClass).hide();
+        };
+        const self = this;
+
+        this.on('click', '.weui_tabbar_item, .weui_navbar_item', function (e){
+            const index = $(this).index();
+            self.toggle(index);
+        });
+
+
+
+        this.toggle(options.defaultIndex);
+
+        return this;
+    };
+})($);

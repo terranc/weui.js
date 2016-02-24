@@ -94,5 +94,8 @@ $(function () {
         $form.validate();
         // $form.validate(function(error){ console.log(error);}); // error: {$dom:[$Object], msg:[String]}
     });
+
+    // tab
+    $('.weui_tab').tab();
 });
 
