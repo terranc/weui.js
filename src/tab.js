@@ -2,7 +2,7 @@
     $.fn.tab = function (options){
         options = $.extend({
             defaultIndex: 0,
-            activeClass: `active`
+            activeClass: `weui_bar_item_on`
         });
         const $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
         const $tabBdItems = this.find('.weui_tab_bd_item');
@@ -12,7 +12,7 @@
             $defaultTabbarItem.addClass(options.activeClass).siblings().removeClass(options.activeClass);
 
             const $defaultTabBdItem = $tabBdItems.eq(index);
-            $defaultTabBdItem.addClass(options.activeClass).show().siblings().removeClass(options.activeClass).hide();
+            $defaultTabBdItem.show().siblings().hide();
         };
         const self = this;
 

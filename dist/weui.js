@@ -103,6 +103,7 @@
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'topTips' : arguments[0];
         var options = arguments[1];
 
+
         if ($topTips) {
             return;
         }
@@ -368,7 +369,7 @@
     $.fn.tab = function (options) {
         options = $.extend({
             defaultIndex: 0,
-            activeClass: 'active'
+            activeClass: 'weui_bar_item_on'
         });
         var $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
         var $tabBdItems = this.find('.weui_tab_bd_item');
@@ -378,7 +379,7 @@
             $defaultTabbarItem.addClass(options.activeClass).siblings().removeClass(options.activeClass);
 
             var $defaultTabBdItem = $tabBdItems.eq(index);
-            $defaultTabBdItem.addClass(options.activeClass).show().siblings().removeClass(options.activeClass).hide();
+            $defaultTabBdItem.show().siblings().hide();
         };
         var self = this;
 
@@ -404,6 +405,7 @@
     $.weui.toast = function () {
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'toast' : arguments[0];
         var options = arguments[1];
+
 
         if (typeof options === 'number') {
             options = {
