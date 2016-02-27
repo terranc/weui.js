@@ -1,4 +1,4 @@
-WeUI 为微信 Web 服务量身设计
+WeUI 为微信 Web 服务量身设计 ![](https://travis-ci.org/progrape/weui.js.svg?branch=master)
 ====
 
 ## 概述
