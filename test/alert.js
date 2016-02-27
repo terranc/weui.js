@@ -19,7 +19,7 @@ describe('alert', function () {
     });
 
     ['this is content'].map(function (content) {
-        it('should render with content when $.weui.alert is called with one params', function () {
+        it('should render with content when $.weui.alert is called with one param', function () {
             $.weui.alert(content);
             var $alert = $('.weui_dialog_alert');
             var $content = $alert.find('.weui_dialog_bd');
