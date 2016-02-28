@@ -6,7 +6,7 @@
     "scripts": {
         "build": "gulp",
         "start": "gulp watch",
-        "test": "gulp test"
+        "test": "npm run build && gulp test"
     },
     "repository": {
         "type": "git",
