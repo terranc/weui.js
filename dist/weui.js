@@ -261,6 +261,7 @@
         }
     }
 
+    var oldFnForm = $.fn.form;
     $.fn.form = function () {
         return this.each(function (index, ele) {
             var $form = $(ele);
@@ -282,7 +283,11 @@
             });
         });
     };
+    $.fn.form.noConflict = function () {
+        return oldFnForm;
+    };
 
+    var oldFnValidate = $.fn.validate;
     $.fn.validate = function (callback) {
         return this.each(function () {
             var $requireds = $(this).find("[required]");
@@ -301,6 +306,9 @@
             }
             callback(null);
         });
+    };
+    $.fn.validate.noConflict = function () {
+        return oldFnValidate;
     };
 })();
 'use strict';
@@ -399,6 +407,7 @@
 'use strict';
 
 (function ($) {
+    var oldFnUploader = $.fn.uploader;
     $.fn.uploader = function (options) {
         options = $.extend({
             title: '图片上传',
@@ -482,5 +491,8 @@
         };
 
         return this;
+    };
+    $.fn.uploader.noConflict = function () {
+        return oldFnUploader;
     };
 })($);

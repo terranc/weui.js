@@ -44,6 +44,7 @@
         }
     }
 
+    var oldFnForm = $.fn.form;
     $.fn.form = function(){
         return this.each(function(index, ele){
             var $form = $(ele);
@@ -67,7 +68,11 @@
             ;
         });
     };
+    $.fn.form.noConflict = function(){
+        return oldFnForm;
+    };
 
+    var oldFnValidate = $.fn.validate;
     $.fn.validate = function(callback){
         return this.each(function(){
             var $requireds = $(this).find("[required]");
@@ -85,5 +90,8 @@
             }
             callback(null);
         });
+    };
+    $.fn.validate.noConflict = function(){
+        return oldFnValidate;
     };
 })();

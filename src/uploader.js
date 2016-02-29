@@ -1,4 +1,5 @@
 (function ($) {
+    var oldFnUploader = $.fn.uploader;
     $.fn.uploader = function (options) {
         options = $.extend({
             title: '图片上传',
@@ -94,5 +95,8 @@
         };
 
         return this;
+    };
+    $.fn.uploader.noConflict = function(){
+        return oldFnUploader;
     };
 })($);
