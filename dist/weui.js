@@ -374,6 +374,7 @@
 'use strict';
 
 (function ($) {
+    var oldFnTab = $.fn.tab;
     $.fn.tab = function (options) {
         options = $.extend({
             defaultIndex: 0,
@@ -399,6 +400,9 @@
         this.toggle(options.defaultIndex);
 
         return this;
+    };
+    $.fn.tab.noConflict = function () {
+        return oldFnTab;
     };
 })($);
 'use strict';
