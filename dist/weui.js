@@ -261,6 +261,7 @@
         }
     }
 
+    var oldFnForm = $.fn.form;
     $.fn.form = function () {
         return this.each(function (index, ele) {
             var $form = $(ele);
@@ -282,7 +283,11 @@
             });
         });
     };
+    $.fn.form.noConflict = function () {
+        return oldFnForm;
+    };
 
+    var oldFnValidate = $.fn.validate;
     $.fn.validate = function (callback) {
         return this.each(function () {
             var $requireds = $(this).find("[required]");
@@ -301,6 +306,9 @@
             }
             callback(null);
         });
+    };
+    $.fn.validate.noConflict = function () {
+        return oldFnValidate;
     };
 })();
 'use strict';
@@ -366,6 +374,7 @@
 'use strict';
 
 (function ($) {
+    var oldFnTab = $.fn.tab;
     $.fn.tab = function (options) {
         options = $.extend({
             defaultIndex: 0,
@@ -391,6 +400,9 @@
         this.toggle(options.defaultIndex);
 
         return this;
+    };
+    $.fn.tab.noConflict = function () {
+        return oldFnTab;
     };
 })($);
 'use strict';
@@ -429,6 +441,7 @@
 'use strict';
 
 (function ($) {
+    var oldFnUploader = $.fn.uploader;
     $.fn.uploader = function (options) {
         options = $.extend({
             title: '图片上传',
@@ -512,5 +525,8 @@
         };
 
         return this;
+    };
+    $.fn.uploader.noConflict = function () {
+        return oldFnUploader;
     };
 })($);
