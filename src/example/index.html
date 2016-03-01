@@ -11,6 +11,7 @@
         }
         body{
             background-color: #efeff4;
+            -webkit-tap-highlight-color: transparent;
         }
         .container {
 
@@ -21,18 +22,18 @@
         }
     </style>
 </head>
-<body>
+<body ontouchstart>
 
 <div class="container">
     <div class="weui_tab">
-        <!--<div class="weui_navbar">
+        <div class="weui_navbar">
             <div class="weui_navbar_item">
                 按钮
             </div>
             <div class="weui_navbar_item">
                 表单
             </div>
-        </div>-->
+        </div>
         <div class="weui_tab_bd">
             <div class="weui_tab_bd_item" style="display: none;">
                 <div class="padding">
@@ -83,20 +84,20 @@
                 </form>
             </div>
         </div>
-        <div class="weui_tabbar">
-            <a href="javascript:;" class="weui_tabbar_item">
-                <div class="weui_tabbar_icon">
-                    <img src="https://weui.github.io/weui/images/icon_nav_button.png" alt="">
-                </div>
-                <p class="weui_tabbar_label">按钮</p>
-            </a>
-            <a href="javascript:;" class="weui_tabbar_item">
-                <div class="weui_tabbar_icon">
-                    <img src="https://weui.github.io/weui/images/icon_nav_msg.png" alt="">
-                </div>
-                <p class="weui_tabbar_label">表单</p>
-            </a>
-        </div>
+        <!--<div class="weui_tabbar">-->
+            <!--<a href="javascript:;" class="weui_tabbar_item">-->
+                <!--<div class="weui_tabbar_icon">-->
+                    <!--<img src="https://weui.github.io/weui/images/icon_nav_button.png" alt="">-->
+                <!--</div>-->
+                <!--<p class="weui_tabbar_label">按钮</p>-->
+            <!--</a>-->
+            <!--<a href="javascript:;" class="weui_tabbar_item">-->
+                <!--<div class="weui_tabbar_icon">-->
+                    <!--<img src="https://weui.github.io/weui/images/icon_nav_msg.png" alt="">-->
+                <!--</div>-->
+                <!--<p class="weui_tabbar_label">表单</p>-->
+            <!--</a>-->
+        <!--</div>-->
     </div>
 </div>
 
