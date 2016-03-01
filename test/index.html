@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WeUI.js</title>
+    <link rel="stylesheet" href="../node_modules/weui/dist/style/weui.css">
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+</head>
+<body>
+    <div id="mocha"></div>
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/expect.js/index.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../dist/weui.js"></script>
+    <script>
+        mocha.setup('bdd');
+    </script>
+    <script src="./alert.js"></script>
+    <script>
+        mocha.checkLeaks();
+        mocha.globals(['jQuery']);
+        mocha.run();
+    </script>
+</body>
+</html>

@@ -8,6 +8,7 @@ var header = require('gulp-header');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var browserSync = require('browser-sync');
+var mochaPhantomJS = require('gulp-mocha-phantomjs');
 
 gulp.task('build:js', function (done) {
     var banner = [
@@ -51,11 +52,9 @@ gulp.task('build:example', function (done) {
 gulp.task('default', ['build:js', 'build:example'], function(){
     browserSync.reload();
 });
-gulp.task('watch', ['default'], function (){
-    gulp.start('server');
+gulp.task('watch', ['default', 'server'], function (){
     gulp.watch('src/**/*.*', ['default']);
 });
-
 gulp.task('server', function () {
     browserSync.init({
         server: {
@@ -64,4 +63,9 @@ gulp.task('server', function () {
         port: 8080,
         startPath: '/example'
     });
+});
+gulp.task('test', function(done){
+    gulp.src('test/index.html')
+        .pipe(mochaPhantomJS({reporter: 'spec'}))
+        .on('end', done);
 });

@@ -374,6 +374,36 @@
 'use strict';
 
 (function ($) {
+    $.fn.tab = function (options) {
+        options = $.extend({
+            defaultIndex: 0,
+            activeClass: 'weui_bar_item_on'
+        });
+        var $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
+        var $tabBdItems = this.find('.weui_tab_bd_item');
+
+        this.toggle = function (index) {
+            var $defaultTabbarItem = $tabbarItems.eq(index);
+            $defaultTabbarItem.addClass(options.activeClass).siblings().removeClass(options.activeClass);
+
+            var $defaultTabBdItem = $tabBdItems.eq(index);
+            $defaultTabBdItem.show().siblings().hide();
+        };
+        var self = this;
+
+        this.on('click', '.weui_tabbar_item, .weui_navbar_item', function (e) {
+            var index = $(this).index();
+            self.toggle(index);
+        });
+
+        this.toggle(options.defaultIndex);
+
+        return this;
+    };
+})($);
+'use strict';
+
+(function ($) {
 
     /**
      * show toast
@@ -472,10 +502,10 @@
             });
         });
 
-        this.update = function (progress) {
+        this.update = function (msg) {
             var $preview = $files.find('.weui_uploader_file').last();
             $preview.addClass('weui_uploader_status');
-            $preview.html('<div class="weui_uploader_status_content">' + progress + '%</div>');
+            $preview.html('<div class="weui_uploader_status_content">' + msg + '</div>');
         };
 
         this.success = function () {
