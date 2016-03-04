@@ -6,7 +6,7 @@ describe('alert', function () {
     it('should render alert when $.weui.alert is called', function () {
         $.weui.alert();
         var $alert = $('.weui_dialog_alert');
-        expect($alert.length).to.not.be(0);
+        expect($alert.length).not.to.be(0);
         $alert.remove();
     });
 
@@ -14,7 +14,7 @@ describe('alert', function () {
         $.weui.alert();
         var $alert = $('.weui_dialog_alert');
         var $mask = $alert.find('.weui_mask');
-        expect($mask.length).to.not.be(0);
+        expect($mask.length).not.to.be(0);
         $alert.remove();
     });
 
@@ -45,5 +45,22 @@ describe('alert', function () {
             expect($alert.hasClass(className)).to.be.ok();
             $alert.remove();
         });
+    });
+
+    it('should have one button when $.weui.alert is called', function(){
+        $.weui.alert('this is content');
+        var $alert = $('.weui_dialog_alert');
+        var $buttons = $alert.find('.weui_dialog_ft .weui_btn_dialog');
+        expect($buttons.length).to.be(1);
+        $alert.remove();
+    });
+
+    it('should close dialog when click button', function(){
+        $.weui.alert('this is content');
+        var $alert = $('.weui_dialog_alert');
+        expect($alert.length).not.to.be(0);
+        var $buttons = $alert.find('.weui_dialog_ft .weui_btn_dialog');
+        $buttons.trigger('click');
+        expect($('.weui_dialog_alert').length).to.be(0);
     });
 });
