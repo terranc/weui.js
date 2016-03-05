@@ -93,6 +93,7 @@
 (function ($) {
 
     var $topTips = null;
+    var timer = null;
 
     /**
      * show top tips
@@ -104,9 +105,11 @@
         var options = arguments[1];
 
 
-        //if ($topTips) {
-        //    return;
-        //}
+        if ($topTips) {
+            $topTips.remove();
+            timer && clearTimeout(timer);
+            $topTips = null;
+        }
 
         if (typeof options === 'number') {
             options = {
@@ -121,7 +124,7 @@
         $topTips = $(html);
         $('body').append($topTips);
 
-        setTimeout(function () {
+        timer = setTimeout(function () {
             $topTips && $topTips.remove();
             $topTips = null;
         }, options.duration);

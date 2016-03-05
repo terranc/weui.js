@@ -1,6 +1,7 @@
 (function ($) {
 
     let $topTips = null;
+    let timer = null;
 
     /**
      * show top tips
@@ -9,9 +10,11 @@
      */
     $.weui.topTips = function (content = 'topTips', options) {
 
-        //if ($topTips) {
-        //    return;
-        //}
+        if ($topTips) {
+            $topTips.remove();
+            timer && clearTimeout(timer);
+            $topTips = null;
+        }
 
         if (typeof options === 'number') {
             options = {
@@ -26,7 +29,7 @@
         $topTips = $(html);
         $('body').append($topTips);
 
-        setTimeout(function () {
+        timer = setTimeout(function () {
             $topTips && $topTips.remove();
             $topTips = null;
         }, options.duration);
