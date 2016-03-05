@@ -55,12 +55,29 @@ describe('confirm', function () {
         $confirm.remove();
     });
 
-    it('should close dialog when click button', function(){
-        $.weui.confirm('this is content');
+    it('should close dialog and execute callback when click button', function(){
+        var yes = sinon.spy();
+        var no = sinon.spy();
+        $.weui.confirm('this is content', yes, no);
         var $confirm = $('.weui_dialog_confirm');
         expect($confirm.length).not.to.be(0);
         var $buttons = $confirm.find('.weui_dialog_ft .weui_btn_dialog');
-        $buttons.eq(0).trigger('click');
+        $buttons.filter('.primary').trigger('click');
         expect($('.weui_dialog_confirm').length).to.be(0);
+        expect(yes.called).to.be(true);
+        expect(no.called).not.to.be(true);
+    });
+
+    it('should close dialog and execute callback when click button', function(){
+        var yes = sinon.spy();
+        var no = sinon.spy();
+        $.weui.confirm('this is content', yes, no);
+        var $confirm = $('.weui_dialog_confirm');
+        expect($confirm.length).not.to.be(0);
+        var $buttons = $confirm.find('.weui_dialog_ft .weui_btn_dialog');
+        $buttons.filter('.default').trigger('click');
+        expect($('.weui_dialog_confirm').length).to.be(0);
+        expect(yes.called).not.to.be(true);
+        expect(no.called).to.be(true);
     });
 });
