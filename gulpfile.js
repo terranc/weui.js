@@ -65,7 +65,7 @@ gulp.task('server', function () {
     });
 });
 gulp.task('test', function(done){
-    gulp.src('test/index.html')
+    gulp.src('test/*.html')
         .pipe(mochaPhantomJS({reporter: 'spec'}))
         .on('end', done);
 });

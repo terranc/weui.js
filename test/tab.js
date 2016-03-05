@@ -38,8 +38,8 @@ describe('tab', function () {
     it('should have default active tab', function () {
         expect($tabbarItems.eq(0).hasClass('weui_bar_item_on')).to.be(true);
         expect($tabbarItems.eq(0).siblings().hasClass('weui_bar_item_on')).to.be(false);
-        expect($tabbdItems.eq(0).is(':visible')).to.be(true);
-        expect($tabbdItems.eq(0).siblings().is(':visible')).to.be(false);
+        expect($tabbdItems.eq(0).css('display')).not.to.equal('none');
+        expect($tabbdItems.eq(0).siblings().css('display')).to.equal('none');
     });
 
     it('should active the tab when tabbar_item is clicked', function(){
@@ -47,8 +47,8 @@ describe('tab', function () {
             $tabbarItems.eq(i).trigger('click');
             expect($tabbarItems.eq(i).hasClass('weui_bar_item_on')).to.be(true);
             expect($tabbarItems.eq(i).siblings().hasClass('weui_bar_item_on')).to.be(false);
-            expect($tabbdItems.eq(i).is(':visible')).to.be(true);
-            expect($tabbdItems.eq(i).siblings().is(':visible')).to.be(false);
+            expect($tabbdItems.eq(i).css('display')).not.to.equal('none');
+            expect($tabbdItems.eq(i).siblings().css('display')).to.equal('none');
         }
     });
 
