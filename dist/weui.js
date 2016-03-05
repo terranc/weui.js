@@ -104,9 +104,9 @@
         var options = arguments[1];
 
 
-        if ($topTips) {
-            return;
-        }
+        //if ($topTips) {
+        //    return;
+        //}
 
         if (typeof options === 'number') {
             options = {
@@ -122,7 +122,7 @@
         $('body').append($topTips);
 
         setTimeout(function () {
-            $topTips.remove();
+            $topTips && $topTips.remove();
             $topTips = null;
         }, options.duration);
     };
