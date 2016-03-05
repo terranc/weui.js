@@ -135,15 +135,20 @@
 
     /**
      * show actionSheet
-     * @param {Array} items
+     * @param {Array} menus
+     * @param {Array} actions
      */
     $.weui.actionSheet = function () {
-        var items = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+        var menus = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+        var actions = arguments.length <= 1 || arguments[1] === undefined ? [{ label: '取消' }] : arguments[1];
 
-        var cells = items.map(function (item, idx) {
+        var cells = menus.map(function (item, idx) {
             return '<div class="weui_actionsheet_cell">' + item.label + '</div>';
         }).join('');
-        var html = '<div>\n            <div class="weui_mask_transition"></div>\n            <div class="weui_actionsheet">\n                <div class="weui_actionsheet_menu">\n                    ' + cells + '\n                </div>\n                <div class="weui_actionsheet_action">\n                    <div class="weui_actionsheet_cell">取消</div>\n                </div>\n            </div>\n        </div>';
+        var action = actions.map(function (item, idx) {
+            return '<div class="weui_actionsheet_cell">' + item.label + '</div>';
+        }).join('');
+        var html = '<div>\n            <div class="weui_mask_transition"></div>\n            <div class="weui_actionsheet">\n                <div class="weui_actionsheet_menu">\n                    ' + cells + '\n                </div>\n                <div class="weui_actionsheet_action">\n                    ' + action + '\n                </div>\n            </div>\n        </div>';
 
         $actionSheetWrapper = $(html);
         $('body').append($actionSheetWrapper);
@@ -153,14 +158,17 @@
         $actionSheetWrapper.find('.weui_actionsheet').addClass('weui_actionsheet_toggle');
 
         // bind event
-        $actionSheetWrapper.on('click', '.weui_actionsheet .weui_actionsheet_cell', function () {
-            var item = items[$(this).index()];
+        $actionSheetWrapper.on('click', '.weui_actionsheet_menu .weui_actionsheet_cell', function () {
+            var item = menus[$(this).index()];
             var cb = item.onClick || $.noop;
             cb.call();
             $.weui.hideActionSheet();
         }).on('click', '.weui_mask_transition', function () {
             $.weui.hideActionSheet();
         }).on('click', '.weui_actionsheet_action .weui_actionsheet_cell', function () {
+            var item = actions[$(this).index()];
+            var cb = item.onClick || $.noop;
+            cb.call();
             $.weui.hideActionSheet();
         });
     };

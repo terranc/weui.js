@@ -4,10 +4,14 @@
 
     /**
      * show actionSheet
-     * @param {Array} items
+     * @param {Array} menus
+     * @param {Array} actions
      */
-    $.weui.actionSheet = function (items = []) {
-        const cells = items.map((item, idx) => {
+    $.weui.actionSheet = function (menus = [], actions = [{label: '取消'}]) {
+        const cells = menus.map((item, idx) => {
+            return `<div class="weui_actionsheet_cell">${item.label}</div>`;
+        }).join('');
+        const action = actions.map((item, idx) => {
             return `<div class="weui_actionsheet_cell">${item.label}</div>`;
         }).join('');
         const html = `<div>
@@ -17,7 +21,7 @@
                     ${cells}
                 </div>
                 <div class="weui_actionsheet_action">
-                    <div class="weui_actionsheet_cell">取消</div>
+                    ${action}
                 </div>
             </div>
         </div>`;
@@ -30,14 +34,17 @@
         $actionSheetWrapper.find('.weui_actionsheet').addClass('weui_actionsheet_toggle');
 
         // bind event
-        $actionSheetWrapper.on('click', '.weui_actionsheet .weui_actionsheet_cell', function (){
-            const item = items[$(this).index()];
+        $actionSheetWrapper.on('click', '.weui_actionsheet_menu .weui_actionsheet_cell', function (){
+            const item = menus[$(this).index()];
             const cb = item.onClick || $.noop;
             cb.call();
             $.weui.hideActionSheet();
         }).on('click', '.weui_mask_transition', function (){
             $.weui.hideActionSheet();
         }).on('click', '.weui_actionsheet_action .weui_actionsheet_cell', function (){
+            const item = actions[$(this).index()];
+            const cb = item.onClick || $.noop;
+            cb.call();
             $.weui.hideActionSheet();
         });
     };
