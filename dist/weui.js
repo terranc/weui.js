@@ -498,7 +498,19 @@
                         // 设置 canvas 的宽度和高度
                         canvas.width = w;
                         canvas.height = h;
-                        ctx.drawImage(img, 0, 0, w, h);
+
+                        var iphone = navigator.userAgent.match(/iPhone OS ([^\s]*)/);
+                        if (iphone && iphone[1].substr(0, 1) == 7) {
+                            if (img.width == 3264 && img.height == 2448) {
+                                // IOS7的拍照或选照片会被莫名地压缩，所以画板要height要*2
+                                ctx.drawImage(img, 0, 0, w, h * 2);
+                            } else {
+                                ctx.drawImage(img, 0, 0, w, h);
+                            }
+                        } else {
+                            ctx.drawImage(img, 0, 0, w, h);
+                        }
+
                         var base64 = canvas.toDataURL('image/png');
 
                         $files.append('<li class="weui_uploader_file " style="background-image:url(' + base64 + ')"></li>');
