@@ -1,5 +1,5 @@
 /*!
- * WeUI.js v0.0.1 (https://github.com/progrape/weui.js)
+ * WeUI.js v0.1.0 (https://github.com/progrape/weui.js)
  * Copyright 2016
  * Licensed under the MIT license
  */
@@ -7,7 +7,7 @@
 
 (function ($) {
     $.weui = {
-        version: '0.0.1'
+        version: '0.1.0'
     };
 })($);
 'use strict';
