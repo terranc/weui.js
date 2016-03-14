@@ -49,9 +49,10 @@
             bindEvent($searchInput, 'onclear', options);
         }).on('input', '.weui_search_input', function () {
             bindEvent($searchInput, 'input', options);
-        }).on('submit', '.weui_search_form', function () {
+        }).on('submit', '.weui_search_outer', function () {
             if(typeof(options.onsubmit) == 'function'){
                 bindEvent($searchInput, 'onsubmit', options);
+                return false;
             }
         });
 
