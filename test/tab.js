@@ -3,6 +3,7 @@ describe('tab', function () {
     var $tab;
     var $tabbarItems;
     var $tabbdItems;
+    var defaultIndex = 1;
 
     before(function () {
         $('body').append(`<div class="weui_tab">
@@ -28,7 +29,9 @@ describe('tab', function () {
         $tab = $('.weui_tab');
         $tabbdItems = $tab.find('.weui_tab_bd_item');
         $tabbarItems = $tab.find('.weui_tabbar_item');
-        $tab.tab();
+        $tab.tab({
+            defaultIndex: defaultIndex
+        });
     });
 
     it('should have $.fn.tab method', function () {
@@ -36,14 +39,14 @@ describe('tab', function () {
     });
 
     it('should have default active tab', function () {
-        expect($tabbarItems.eq(0).hasClass('weui_bar_item_on')).to.be(true);
-        expect($tabbarItems.eq(0).siblings().hasClass('weui_bar_item_on')).to.be(false);
-        expect($tabbdItems.eq(0).css('display')).not.to.equal('none');
-        expect($tabbdItems.eq(0).siblings().css('display')).to.equal('none');
+        expect($tabbarItems.eq(defaultIndex).hasClass('weui_bar_item_on')).to.be(true);
+        expect($tabbarItems.eq(defaultIndex).siblings().hasClass('weui_bar_item_on')).to.be(false);
+        expect($tabbdItems.eq(defaultIndex).css('display')).not.to.equal('none');
+        expect($tabbdItems.eq(defaultIndex).siblings().css('display')).to.equal('none');
     });
 
-    it('should active the tab when tabbar_item is clicked', function(){
-        for(var i = 0, len = $tabbarItems.length; i < len; i++){
+    it('should active the tab when tabbar_item is clicked', function () {
+        for (var i = 0, len = $tabbarItems.length; i < len; i++) {
             $tabbarItems.eq(i).trigger('click');
             expect($tabbarItems.eq(i).hasClass('weui_bar_item_on')).to.be(true);
             expect($tabbarItems.eq(i).siblings().hasClass('weui_bar_item_on')).to.be(false);
@@ -52,7 +55,7 @@ describe('tab', function () {
         }
     });
 
-    after(function(){
+    after(function () {
         $tab.remove();
     });
 

@@ -4,7 +4,7 @@
         options = $.extend({
             defaultIndex: 0,
             activeClass: `weui_bar_item_on`
-        });
+        }, options);
         const $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
         const $tabBdItems = this.find('.weui_tab_bd_item');
 

@@ -446,7 +446,7 @@
         options = $.extend({
             defaultIndex: 0,
             activeClass: 'weui_bar_item_on'
-        });
+        }, options);
         var $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
         var $tabBdItems = this.find('.weui_tab_bd_item');
 
