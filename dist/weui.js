@@ -18,7 +18,7 @@
 
     /**
      *  weui dialog
-     * @param {Object} options
+     * @param {Object} [options]
      */
     $.weui.dialog = function (options) {
         options = $.extend({
@@ -51,9 +51,17 @@
      */
     $.weui.closeDialog = function () {
         if ($dialog) {
-            $dialog.off('click', '.weui_btn_dialog');
-            $dialog.remove();
-            $dialog = null;
+            $dialog.off('click');
+            // zepto 核心不包含动画相关的方法
+            if (typeof $dialog.fadeOut === 'function') {
+                $dialog.fadeOut('fast', function () {
+                    $dialog.remove();
+                    $dialog = null;
+                });
+            } else {
+                $dialog.remove();
+                $dialog = null;
+            }
         }
     };
 })($);

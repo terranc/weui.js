@@ -55,14 +55,18 @@ describe('alert', function () {
         $alert.remove();
     });
 
-    it('should close dialog when click button', function(){
+    it('should close dialog when click button', function(done){
         var yes = sinon.spy();
         $.weui.alert('this is content', yes);
         var $alert = $('.weui_dialog_alert');
         expect($alert.length).not.to.be(0);
         var $buttons = $alert.find('.weui_dialog_ft .weui_btn_dialog');
         $buttons.trigger('click');
-        expect($('.weui_dialog_alert').length).to.be(0);
-        expect(yes.called).to.be(true);
+        // waiting for dialog fading out
+        setTimeout(() => {
+            expect($('.weui_dialog_alert').length).to.be(0);
+            expect(yes.called).to.be(true);
+            done();
+        }, 1000);
     });
 });
