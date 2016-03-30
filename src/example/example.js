@@ -91,12 +91,21 @@ $(function () {
 
     // 表单校验
     $("#formSubmitBtn").on("click", function(){
-        $form.validate();
         // $form.validate(function(error){ console.log(error);}); // error: {$dom:[$Object], msg:[String]}
+        $form.validate(function(error){
+            if(error){
+                console.log("错误提示是：" + error.msg + "，但我不想出现红色报错。");
+                return true; // 如果return true的话，则不会显示错误提示
+            }else{
+                console.log("校验成功，提交数据。。。");
+            }
+        });
     });
 
     // tab
-    $('.weui_tab').tab();
+    $('.weui_tab').tab({
+        defaultIndex: 1
+    });
 
     // searchBar
     $('.search_bar_wrap').searchBar({

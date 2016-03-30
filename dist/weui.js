@@ -327,13 +327,11 @@
 
             for (var i = 0, len = $requireds.length; i < len; ++i) {
                 var $dom = $requireds.eq(i),
-                    errorMsg = _validate($dom);
+                    errorMsg = _validate($dom),
+                    error = { $dom: $dom, msg: errorMsg };
                 if (errorMsg) {
-                    callback({
-                        $dom: $dom,
-                        msg: errorMsg
-                    });
-                    break;
+                    if (!callback(error)) _showErrorMsg(error);
+                    return;
                 }
             }
             callback(null);
