@@ -95,7 +95,7 @@ $(function () {
         $form.validate(function(error){
             if(!error){
                 $.weui.loading('提交中...');
-                setTimeout(() => {
+                setTimeout(function() {
                     $.weui.hideLoading();
                     $.weui.toast('提交成功');
                 }, 1500);
