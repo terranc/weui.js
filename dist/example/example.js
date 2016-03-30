@@ -100,9 +100,7 @@ $(function () {
     });
 
     // tab
-    $('.weui_tab').tab({
-        defaultIndex: 1
-    });
+    $('.weui_tab').tab();
 
     // searchBar
     $('.search_bar_wrap').searchBar({
