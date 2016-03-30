@@ -11,6 +11,12 @@ WeUI 本身只包含样式，不包含 `javascript` 功能。为了方便使用�
 
 如果应用只是使用 `jquery/zepto` 库，那么就需要一个更轻量的封装，使之符合 `jquery/zepto` 的调用习惯。
 
+## 预览
+
+![http://progrape.github.io/weui.js](https://cloud.githubusercontent.com/assets/4652816/14138542/55acaa48-f6a0-11e5-8a43-3d66d70330b4.png)
+
+http://progrape.github.io/weui.js
+
 ## 文档
 
 参考 [Wiki](https://github.com/progrape/weui.js/wiki) 
