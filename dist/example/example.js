@@ -137,5 +137,7 @@ $(function () {
             console.log('click clear');
         }
     });
+
+    FastClick.attach(document.body);
 });
 
