@@ -106,7 +106,7 @@
     /**
      * show top tips
      * @param {String} content
-     * @param {Object|Number} options
+     * @param {Object|Number} [options]
      */
     $.weui.topTips = function () {
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'topTips' : arguments[0];
@@ -128,13 +128,25 @@
         options = $.extend({
             duration: 3000
         }, options);
-        var html = '<div class="weui_toptips weui_warn" style="display: block;">' + content + '</div>';
+        var html = '<div class="weui_toptips weui_warn">' + content + '</div>';
         $topTips = $(html);
-        $('body').append($topTips);
+        $topTips.appendTo($('body'));
+        if (typeof $topTips.slideDown === 'function') {
+            $topTips.slideDown(20);
+        }
 
         timer = setTimeout(function () {
-            $topTips && $topTips.remove();
-            $topTips = null;
+            if ($topTips) {
+                if (typeof $topTips.slideUp === 'function') {
+                    $topTips.slideUp(120, function () {
+                        $topTips.remove();
+                        $topTips = null;
+                    });
+                } else {
+                    $topTips.remove();
+                    $topTips = null;
+                }
+            }
         }, options.duration);
     };
 })($);

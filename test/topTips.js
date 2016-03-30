@@ -35,6 +35,6 @@ describe('topTips', function () {
         setTimeout(function(){
             expect($('.weui_toptips').length).to.be(0);
             done();
-        }, duration);
+        }, duration + 1000); // waiting for slideUp
     });
 });
