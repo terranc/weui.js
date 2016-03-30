@@ -94,7 +94,11 @@ $(function () {
         // $form.validate(function(error){ console.log(error);}); // error: {$dom:[$Object], msg:[String]}
         $form.validate(function(error){
             if(!error){
-                console.log("校验成功，提交数据。。。");
+                $.weui.loading('提交中...');
+                setTimeout(() => {
+                    $.weui.hideLoading();
+                    $.weui.toast('提交成功');
+                }, 1500);
             }
         });
     });
