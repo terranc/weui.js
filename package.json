@@ -38,6 +38,6 @@
     },
     "dependencies": {
         "jquery": "^2.2.1",
-        "weui": "^0.4.0"
+        "weui": "^0.4.1"
     }
 }

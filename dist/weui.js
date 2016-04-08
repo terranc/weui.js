@@ -468,9 +468,6 @@
         var $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
         var $tabBdItems = this.find('.weui_tab_bd_item');
 
-        // iOS 下不能点击 navbar, 先用js设一下z-index, 后面在 css 设置
-        this.find('.weui_navbar').css('z-index', 1);
-
         this.toggle = function (index) {
             var $defaultTabbarItem = $tabbarItems.eq(index);
             $defaultTabbarItem.addClass(options.activeClass).siblings().removeClass(options.activeClass);
