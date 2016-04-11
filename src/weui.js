@@ -2,4 +2,6 @@
     $.weui = {
         version: '@VERSION'
     };
+
+    $.noop = $.noop || function () {};
 })($);
