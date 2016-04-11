@@ -38,7 +38,7 @@ describe('alert', function () {
         });
     });
 
-    ['className', ''].map(function (className) {
+    ['className'].map(function (className) {
         it('should render with className when $.weui.alert is called with two params', function () {
             $.weui.alert('content', {className: className});
             var $alert = $('.weui_dialog_alert');

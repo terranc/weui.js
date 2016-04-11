@@ -38,7 +38,7 @@ describe('confirm', function () {
         });
     });
 
-    ['className', ''].map(function (className) {
+    ['className'].map(function (className) {
         it('should render with className when $.weui.confirm is called with two params', function () {
             $.weui.confirm('content', {className: className});
             var $confirm = $('.weui_dialog_confirm');

@@ -57,7 +57,7 @@ describe('form', function () {
         expect($emptyTextArea.parents(".weui_cell").hasClass("weui_cell_warn")).to.be(true);
         expect($topTips.text()).to.equal("请输入手机号");
 
-        $topTips.remove();
+        //$topTips.remove();
     });
 
     it('test when input is empty, not to show error tips', function(){
@@ -74,7 +74,7 @@ describe('form', function () {
         expect($notMatchInput.parents(".weui_cell").hasClass("weui_cell_warn")).to.be(true);
         expect($topTips.text()).to.equal("请输入正确的手机号");
 
-        $topTips.remove();
+        //$topTips.remove();
     });
 
     it('test when input value is matched, not to show error tips', function(){
