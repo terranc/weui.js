@@ -5,6 +5,7 @@
             title: '图片上传',
             maxCount: 4,
             maxWidth: 500,
+            accept: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
             onChange: $.noop
         }, options);
 
@@ -17,7 +18,7 @@
                             <ul class="weui_uploader_files">
                             </ul>
                             <div class="weui_uploader_input_wrp">
-                                <input class="weui_uploader_input" type="file" accept="image/jpg,image/jpeg,image/png,image/gif">
+                                <input class="weui_uploader_input" type="file" accept="${options.accept.join(',')}">
                             </div>
                         </div>
                     </div>`;

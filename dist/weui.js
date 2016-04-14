@@ -534,10 +534,11 @@
             title: '图片上传',
             maxCount: 4,
             maxWidth: 500,
+            accept: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
             onChange: $.noop
         }, options);
 
-        var html = '<div class="weui_uploader">\n                        <div class="weui_uploader_hd weui_cell">\n                            <div class="weui_cell_bd weui_cell_primary">' + options.title + '</div>\n                            <div class="weui_cell_ft">0/' + options.maxCount + '</div>\n                        </div>\n                        <div class="weui_uploader_bd">\n                            <ul class="weui_uploader_files">\n                            </ul>\n                            <div class="weui_uploader_input_wrp">\n                                <input class="weui_uploader_input" type="file" accept="image/jpg,image/jpeg,image/png,image/gif">\n                            </div>\n                        </div>\n                    </div>';
+        var html = '<div class="weui_uploader">\n                        <div class="weui_uploader_hd weui_cell">\n                            <div class="weui_cell_bd weui_cell_primary">' + options.title + '</div>\n                            <div class="weui_cell_ft">0/' + options.maxCount + '</div>\n                        </div>\n                        <div class="weui_uploader_bd">\n                            <ul class="weui_uploader_files">\n                            </ul>\n                            <div class="weui_uploader_input_wrp">\n                                <input class="weui_uploader_input" type="file" accept="' + options.accept.join(',') + '">\n                            </div>\n                        </div>\n                    </div>';
         this.html(html);
 
         var $uploader = this;
