@@ -55,34 +55,7 @@ $(function () {
 
     $('#uploader').uploader({
         maxCount: 4,
-        onChange: function (file) {
-            var update = this.update;
-            var success = this.success;
-            var error = this.error;
-            $.ajax({
-                type: 'POST',
-                url: '/api/v1/upload?format=base64',
-                data: {
-                    data: file.data
-                },
-                xhr: function() {
-                    var xhr = new window.XMLHttpRequest();
-                    xhr.addEventListener('progress', function(evt) {
-                        if (evt.lengthComputable) {
-                            var percentComplete = evt.loaded / evt.total;
-                            update(percentComplete + '%');
-                        }
-                    }, false);
-                    return xhr;
-                },
-                success: function(res){
-                    success();
-                },
-                error: function (err){
-                    error();
-                }
-            });
-        }
+        auto: true
     });
 
     // 为表单加入检测功能：当required的元素blur时校验，并弹出错误提示
@@ -104,7 +77,9 @@ $(function () {
     });
 
     // tab
-    $('.weui_tab').tab();
+    $('.weui_tab').tab({
+        defaultIndex: 1
+    });
 
     // searchBar
     $('.search_bar_wrap').searchBar({
@@ -138,6 +113,6 @@ $(function () {
         }
     });
 
-    FastClick.attach(document.body);
+    //FastClick.attach(document.body);
 });
 
