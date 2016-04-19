@@ -1,3 +1,13 @@
+#### v0.2.1 (2016-04-19)
+
+- 【修复】修复 zepto v1.1.6 下无法关闭 dailog 的 bug
+- 【修复】修复 zepto 下 topTips 无法显示的 bug
+
+详情参考：
+
+- [2034744](https://github.com/progrape/weui.js/commit/2034744) #15 修复 zetpo下topTips无法显示
+- [d30d6cb](https://github.com/progrape/weui.js/commit/d30d6cb) #13 fix `$.noop` undefined on zepto
+
 
 #### v0.2.0 (2016-03-30)
 
@@ -9,11 +19,11 @@
 
 详情参考:
 
-- cedbb1a fix validate调用了两次的bug 
-- 43e0587 add slideUp & slideDown effect to toptips
-- 6e3b579 add fadeOut effect to dialog when closing
-- d1bdfc0 #10 修复 tab 传入 options 不生效的 bug 
-- 31ae5d6 Fix searchbar oncommit bug
+- [cedbb1a](https://github.com/progrape/weui.js/commit/cedbb1a) fix validate调用了两次的bug 
+- [43e0587](https://github.com/progrape/weui.js/commit/43e0587) add slideUp & slideDown effect to toptips
+- [6e3b579](https://github.com/progrape/weui.js/commit/6e3b579) add fadeOut effect to dialog when closing
+- [d1bdfc0](https://github.com/progrape/weui.js/commit/d1bdfc0) #10 修复 tab 传入 options 不生效的 bug 
+- [31ae5d6](https://github.com/progrape/weui.js/commit/31ae5d6) Fix searchbar oncommit bug
 
 #### v0.1.0 (2016-03-10)
 
