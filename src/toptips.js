@@ -31,6 +31,9 @@
         if (typeof $topTips.slideDown === 'function') {
             $topTips.slideDown(20);
         }
+        else {
+            $topTips.show();
+        }
 
         timer = setTimeout(() => {
             if ($topTips) {
