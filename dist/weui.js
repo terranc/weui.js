@@ -537,10 +537,19 @@
             compress: true,
             maxWidth: 500,
             auto: false,
-            server: '',
+            url: '/upload.php',
             method: 'POST',
             accept: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
-            onChange: $.noop
+            headers: {},
+
+            // event
+            onChange: $.noop, // alias to `onAddedFile`
+            onAddedFile: $.noop,
+            onRemovedfile: $.noop,
+            onError: $.noop,
+            onSuccess: $.noop,
+            onComplete: $.noop
+
         }, options);
 
         var html = '<div class="weui_uploader">\n                        <div class="weui_uploader_hd weui_cell">\n                            <div class="weui_cell_bd weui_cell_primary">' + options.title + '</div>\n                            <div class="weui_cell_ft">0/' + options.maxCount + '</div>\n                        </div>\n                        <div class="weui_uploader_bd">\n                            <ul class="weui_uploader_files">\n                            </ul>\n                            <div class="weui_uploader_input_wrp">\n                                <input class="weui_uploader_input" type="file" accept="' + options.accept.join(',') + '">\n                            </div>\n                        </div>\n                    </div>';
@@ -570,8 +579,8 @@
         /**
          * error
          */
-        function error() {
-            var $preview = $files.find('.weui_uploader_file').last();
+        function error(index) {
+            var $preview = $files.find('.weui_uploader_file').eq(index);
             $preview.addClass('weui_uploader_status');
             $preview.html('<div class="weui_uploader_status_content"><i class="weui_icon_warn"></i></div>');
         }
@@ -579,8 +588,8 @@
         /**
          * success
          */
-        function success() {
-            var $preview = $files.find('.weui_uploader_file').last();
+        function success(index) {
+            var $preview = $files.find('.weui_uploader_file').eq(index);
             $preview.removeClass('weui_uploader_status');
             $preview.html('');
         }
@@ -595,22 +604,27 @@
             $preview.html('<div class="weui_uploader_status_content">' + msg + '</div>');
         }
 
-        function upload(file) {
+        /**
+         * 上传
+         */
+        function upload(file, index) {
             var fd = new FormData();
             fd.append('filename', file.name);
             fd.append('data', file.blob);
             $.ajax({
                 type: options.method,
-                url: options.server,
+                url: options.url,
                 data: fd,
                 processData: false,
                 contentType: false
-            }).success(function () {
-                success();
+            }).success(function (res) {
+                success(index);
+                options.onSuccess(res);
             }).error(function (err) {
-                error();
-                // 抛出事件
-                console.log(err);
+                error(index);
+                options.onError(err);
+            }).always(function () {
+                options.onComplete();
             });
         }
 
@@ -622,7 +636,8 @@
             }
 
             if (count >= options.maxCount) {
-                $.weui.alert('最多只能上传' + options.maxCount + '张图片');
+                // 数量超出时
+                //$.weui.alert(`最多只能上传${options.maxCount}张图片`);
                 return;
             }
 
@@ -662,7 +677,8 @@
                         ++count;
                         $uploader.find('.weui_uploader_hd .weui_cell_ft').text(count + '/' + options.maxCount);
 
-                        options.onChange.call($uploader, {
+                        // trigger onAddedfile event
+                        options.onAddedFile({
                             lastModified: file.lastModified,
                             lastModifiedDate: file.lastModifiedDate,
                             name: file.name,
@@ -674,7 +690,7 @@
 
                         // 如果是自动上传
                         if (options.auto) {
-                            upload({ name: file.name, blob: blob });
+                            upload({ name: file.name, blob: blob }, blobs.length - 1);
                         }
                     };
 
@@ -688,9 +704,8 @@
          * 主动调用上传
          */
         this.upload = function () {
-            blobs.map(function (file) {
-                upload(file);
-            });
+            // 逐个上传
+            blobs.map(upload);
         };
 
         return this;
