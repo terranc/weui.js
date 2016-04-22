@@ -12,7 +12,7 @@
             method: 'POST',
             accept: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
             headers: {},
-            
+
             // event
             onChange: $.noop, // alias to `onAddedFile`
             onAddedFile: $.noop,
@@ -20,7 +20,7 @@
             onError: $.noop,
             onSuccess: $.noop,
             onComplete: $.noop
-            
+
         }, options);
 
         const html = `<div class="weui_uploader">
@@ -56,7 +56,7 @@
             for (var i = 0; i < byteString.length; i++) {
                 ia[i] = byteString.charCodeAt(i);
             }
-            return new Blob([ab], { type: mimeString });
+            return new Blob([ab], {type: mimeString});
         }
 
         /**
@@ -152,7 +152,7 @@
 
                         const dataURL = canvas.toDataURL();
                         const blob = dataURItoBlob(dataURL);
-                        blobs.push({ name: file.name, blob: blob });
+                        blobs.push({name: file.name, blob: blob});
                         const blobUrl = URL.createObjectURL(blob);
 
                         $files.append(`<li class="weui_uploader_file " style="background-image:url(${blobUrl})"></li>`);
@@ -172,7 +172,7 @@
 
                         // 如果是自动上传
                         if (options.auto) {
-                            upload({ name: file.name, blob: blob }, blobs.length - 1);
+                            upload({name: file.name, blob: blob}, blobs.length - 1);
                         }
                     };
 
@@ -182,12 +182,26 @@
             });
         });
 
+        this.on('click', '.weui_uploader_file', function () {
+            $.weui.confirm('确定删除该图片?', () => {
+                const index = $(this).index();
+            });
+        });
+
         /**
          * 主动调用上传
          */
         this.upload = function () {
             // 逐个上传
             blobs.map(upload);
+        };
+
+        /**
+         * 删除第 ${index} 张图片
+         * @param index
+         */
+        this.remove = function (index) {
+
         };
 
         return this;

@@ -700,6 +700,14 @@
             });
         });
 
+        this.on('click', '.weui_uploader_file', function () {
+            var _this = this;
+
+            $.weui.confirm('确定删除该图片?', function () {
+                var index = $(_this).index();
+            });
+        });
+
         /**
          * 主动调用上传
          */
@@ -707,6 +715,12 @@
             // 逐个上传
             blobs.map(upload);
         };
+
+        /**
+         * 删除第 ${index} 张图片
+         * @param index
+         */
+        this.remove = function (index) {};
 
         return this;
     };
