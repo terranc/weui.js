@@ -63,7 +63,7 @@ $(function () {
         onSuccess: function (res) {
             console.log(res);
         },
-        onError: function(err){
+        onError: function (err) {
             console.warn(err);
         }
     });
