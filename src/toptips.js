@@ -6,7 +6,7 @@
     /**
      * show top tips
      * @param {String} content
-     * @param {Object|Number} [options]
+     * @param {Object|Number|Function} [options]
      */
     $.weui.topTips = function (content = 'topTips', options) {
 
@@ -22,8 +22,15 @@
             };
         }
 
+        if (typeof options === 'function') {
+            options = {
+                callback: options
+            };
+        }
+
         options = $.extend({
-            duration: 3000
+            duration: 3000,
+            callback: $.noop
         }, options);
         const html = `<div class="weui_toptips weui_warn">${content}</div>`;
         $topTips = $(html);
@@ -41,11 +48,13 @@
                     $topTips.slideUp(120, () => {
                         $topTips.remove();
                         $topTips = null;
+                        options.callback();
                     });
                 }
                 else {
                     $topTips.remove();
                     $topTips = null;
+                    options.callback();
                 }
             }
         }, options.duration);

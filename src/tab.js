@@ -3,7 +3,8 @@
     $.fn.tab = function (options){
         options = $.extend({
             defaultIndex: 0,
-            activeClass: `weui_bar_item_on`
+            activeClass: `weui_bar_item_on`,
+            onToggle: $.noop
         }, options);
         const $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
         const $tabBdItems = this.find('.weui_tab_bd_item');
@@ -14,6 +15,8 @@
 
             const $defaultTabBdItem = $tabBdItems.eq(index);
             $defaultTabBdItem.show().siblings().hide();
+
+            options.onToggle(index);
         };
         const self = this;
 
@@ -21,8 +24,6 @@
             const index = $(this).index();
             self.toggle(index);
         });
-
-
 
         this.toggle(options.defaultIndex);
 

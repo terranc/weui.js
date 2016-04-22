@@ -20,20 +20,24 @@ $(function () {
                     console.log('知道了......');
                 }
             }, {
-                label: '好的',
-                type: 'primary',
-                onClick: function () {
-                    console.log('好的......');
-                }
-            }]
+                    label: '好的',
+                    type: 'primary',
+                    onClick: function () {
+                        console.log('好的......');
+                    }
+                }]
         });
     }).on('click', '#btnToast', function (e) {
-        $.weui.toast('已完成');
+        $.weui.toast('已完成', function () {
+            console.log('toast 关闭了');
+        });
     }).on('click', '#btnLoading', function (e) {
         $.weui.loading('数据加载中...');
         setTimeout($.weui.hideLoading, 3000);
     }).on('click', '#btnTopTips', function (e) {
-        $.weui.topTips('格式不对');
+        $.weui.topTips('格式不对', function () {
+            console.log('topTips关闭了');
+        });
     }).on('click', '#btnActionSheet', function (e) {
         $.weui.actionSheet([{
             label: '示例菜单',
@@ -41,16 +45,16 @@ $(function () {
                 console.log('click1');
             }
         }, {
-            label: '示例菜单',
-            onClick: function () {
-                console.log('click2');
-            }
-        }, {
-            label: '示例菜单',
-            onClick: function () {
-                console.log('click3');
-            }
-        }]);
+                label: '示例菜单',
+                onClick: function () {
+                    console.log('click2');
+                }
+            }, {
+                label: '示例菜单',
+                onClick: function () {
+                    console.log('click3');
+                }
+            }]);
     });
 
     $('#uploader').uploader({
@@ -65,9 +69,9 @@ $(function () {
                 data: {
                     data: file.data
                 },
-                xhr: function() {
+                xhr: function () {
                     var xhr = new window.XMLHttpRequest();
-                    xhr.addEventListener('progress', function(evt) {
+                    xhr.addEventListener('progress', function (evt) {
                         if (evt.lengthComputable) {
                             var percentComplete = evt.loaded / evt.total;
                             update(percentComplete + '%');
@@ -75,10 +79,10 @@ $(function () {
                     }, false);
                     return xhr;
                 },
-                success: function(res){
+                success: function (res) {
                     success();
                 },
-                error: function (err){
+                error: function (err) {
                     error();
                 }
             });
@@ -90,12 +94,12 @@ $(function () {
     $form.form();
 
     // 表单校验
-    $("#formSubmitBtn").on("click", function(){
+    $("#formSubmitBtn").on("click", function () {
         // $form.validate(function(error){ console.log(error);}); // error: {$dom:[$Object], msg:[String]}
-        $form.validate(function(error){
-            if(!error){
+        $form.validate(function (error) {
+            if (!error) {
                 $.weui.loading('提交中...');
-                setTimeout(function() {
+                setTimeout(function () {
                     $.weui.hideLoading();
                     $.weui.toast('提交成功');
                 }, 1500);
@@ -104,36 +108,40 @@ $(function () {
     });
 
     // tab
-    $('.weui_tab').tab();
+    $('.weui_tab').tab({
+        onToggle: function (index) {
+            console.log('tab onToggle', index);
+        }
+    });
 
     // searchBar
     $('.search_bar_wrap').searchBar({
         //替换原模板的“取消”
-        cancelText:"取消",
+        cancelText: "取消",
         //替换原模板的“搜索”
-        searchText:'搜索',
+        searchText: '搜索',
         //搜索栏获得焦点时
         onfocus: function (value) {
-            console.log('focus!The value is '+value);
+            console.log('focus!The value is ' + value);
         },
         //搜索栏失去焦点时
-        onblur:function(value) {
-            console.log('blur!The value is '+value);
+        onblur: function (value) {
+            console.log('blur!The value is ' + value);
         },
         //搜索栏在输入时
-        oninput: function(value) {
-            console.log('Input!The value is '+ value);
+        oninput: function (value) {
+            console.log('Input!The value is ' + value);
         },
         //搜索栏提交时，如果没有submit方法，则沿用浏览器默认的提交方式
-        onsubmit:function(value){
-            console.log('Submit!The value is '+ value);
+        onsubmit: function (value) {
+            console.log('Submit!The value is ' + value);
         },
         //点击取消按钮
-        oncancel:function(){
+        oncancel: function () {
             console.log('click cancel');
         },
         //点击清空按钮
-        onclear:function(){
+        onclear: function () {
             console.log('click clear');
         }
     });
