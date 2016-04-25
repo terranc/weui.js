@@ -531,6 +531,8 @@
     var oldFnUploader = $.fn.uploader;
 
     $.fn.uploader = function (options) {
+        var _this = this;
+
         options = $.extend({
             title: '图片上传',
             maxCount: 4,
@@ -543,7 +545,7 @@
             headers: {},
 
             // event
-            onChange: $.noop, // alias to `onAddedFile`
+            onChange: $.noop, // alias `onAddedFile`
             onAddedFile: $.noop,
             onRemovedfile: $.noop,
             onError: $.noop,
@@ -558,7 +560,6 @@
         var $uploader = this;
         var $files = this.find('.weui_uploader_files');
         var $file = this.find('.weui_uploader_input');
-        var count = 0;
         var blobs = [];
 
         /**
@@ -635,9 +636,7 @@
                 return;
             }
 
-            if (count >= options.maxCount) {
-                // 数量超出时
-                //$.weui.alert(`最多只能上传${options.maxCount}张图片`);
+            if (blobs.length >= options.maxCount) {
                 return;
             }
 
@@ -674,8 +673,7 @@
                         var blobUrl = URL.createObjectURL(blob);
 
                         $files.append('<li class="weui_uploader_file " style="background-image:url(' + blobUrl + ')"></li>');
-                        ++count;
-                        $uploader.find('.weui_uploader_hd .weui_cell_ft').text(count + '/' + options.maxCount);
+                        $uploader.find('.weui_uploader_hd .weui_cell_ft').text(blobs.length + '/' + options.maxCount);
 
                         // trigger onAddedfile event
                         options.onAddedFile({
@@ -701,10 +699,9 @@
         });
 
         this.on('click', '.weui_uploader_file', function () {
-            var _this = this;
-
             $.weui.confirm('确定删除该图片?', function () {
                 var index = $(_this).index();
+                _this.remove(index);
             });
         });
 
@@ -720,7 +717,12 @@
          * 删除第 ${index} 张图片
          * @param index
          */
-        this.remove = function (index) {};
+        this.remove = function (index) {
+            var $preview = $files.find('.weui_uploader_file').eq(index);
+            $preview.remove();
+            blobs.splice(index, 1);
+            options.onRemovedfile(index);
+        };
 
         return this;
     };

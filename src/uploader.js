@@ -14,7 +14,7 @@
             headers: {},
 
             // event
-            onChange: $.noop, // alias to `onAddedFile`
+            onChange: $.noop, // alias `onAddedFile`
             onAddedFile: $.noop,
             onRemovedfile: $.noop,
             onError: $.noop,
@@ -41,7 +41,6 @@
         const $uploader = this;
         const $files = this.find('.weui_uploader_files');
         const $file = this.find('.weui_uploader_input');
-        let count = 0;
         let blobs = [];
 
         /**
@@ -118,9 +117,7 @@
                 return;
             }
 
-            if (count >= options.maxCount) {
-                // 数量超出时
-                //$.weui.alert(`最多只能上传${options.maxCount}张图片`);
+            if (blobs.length >= options.maxCount) {
                 return;
             }
 
@@ -156,8 +153,7 @@
                         const blobUrl = URL.createObjectURL(blob);
 
                         $files.append(`<li class="weui_uploader_file " style="background-image:url(${blobUrl})"></li>`);
-                        ++count;
-                        $uploader.find('.weui_uploader_hd .weui_cell_ft').text(`${count}/${options.maxCount}`);
+                        $uploader.find('.weui_uploader_hd .weui_cell_ft').text(`${blobs.length}/${options.maxCount}`);
 
                         // trigger onAddedfile event
                         options.onAddedFile({
@@ -182,9 +178,10 @@
             });
         });
 
-        this.on('click', '.weui_uploader_file', function () {
+        this.on('click', '.weui_uploader_file', () => {
             $.weui.confirm('确定删除该图片?', () => {
                 const index = $(this).index();
+                this.remove(index);
             });
         });
 
@@ -201,7 +198,10 @@
          * @param index
          */
         this.remove = function (index) {
-
+            const $preview = $files.find('.weui_uploader_file').eq(index);
+            $preview.remove();
+            blobs.splice(index, 1);
+            options.onRemovedfile(index);
         };
 
         return this;
