@@ -133,5 +133,9 @@ $(function () {
     });
 
     FastClick.attach(document.body);
+
+    $(window).on('error', function (e){
+        console.error(e);
+    });
 });
 
