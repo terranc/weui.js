@@ -28,12 +28,16 @@ $(function () {
                 }]
         });
     }).on('click', '#btnToast', function (e) {
-        $.weui.toast('已完成');
+        $.weui.toast('已完成', function () {
+            console.log('toast 关闭了');
+        });
     }).on('click', '#btnLoading', function (e) {
         $.weui.loading('数据加载中...');
         setTimeout($.weui.hideLoading, 3000);
     }).on('click', '#btnTopTips', function (e) {
-        $.weui.topTips('格式不对');
+        $.weui.topTips('格式不对', function () {
+            console.log('topTips关闭了');
+        });
     }).on('click', '#btnActionSheet', function (e) {
         $.weui.actionSheet([{
             label: '示例菜单',
@@ -91,9 +95,7 @@ $(function () {
     });
 
     // tab
-    $('.weui_tab').tab({
-        defaultIndex: 1
-    });
+    $('.weui_tab').tab();
 
     // searchBar
     $('.search_bar_wrap').searchBar({

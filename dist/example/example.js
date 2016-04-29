@@ -28,12 +28,16 @@ $(function () {
                 }]
         });
     }).on('click', '#btnToast', function (e) {
-        $.weui.toast('已完成');
+        $.weui.toast('已完成', function () {
+            console.log('toast 关闭了');
+        });
     }).on('click', '#btnLoading', function (e) {
         $.weui.loading('数据加载中...');
         setTimeout($.weui.hideLoading, 3000);
     }).on('click', '#btnTopTips', function (e) {
-        $.weui.topTips('格式不对');
+        $.weui.topTips('格式不对', function () {
+            console.log('topTips关闭了');
+        });
     }).on('click', '#btnActionSheet', function (e) {
         $.weui.actionSheet([{
             label: '示例菜单',
@@ -53,23 +57,36 @@ $(function () {
             }]);
     });
 
-    var $uploader = $('#uploader').uploader({
+    $('#uploader').uploader({
         maxCount: 4,
-        auto: false,
-        url: '/example/index.html',
-        onAddedFile: function (file) {
-            console.log(file);
-        },
-        onSuccess: function (res) {
-            console.log(res);
-        },
-        onError: function (err) {
-            console.warn(err);
+        onChange: function (file) {
+            var update = this.update;
+            var success = this.success;
+            var error = this.error;
+            $.ajax({
+                type: 'POST',
+                url: '/api/v1/upload?format=base64',
+                data: {
+                    data: file.data
+                },
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            update(percentComplete + '%');
+                        }
+                    }, false);
+                    return xhr;
+                },
+                success: function (res) {
+                    success();
+                },
+                error: function (err) {
+                    error();
+                }
+            });
         }
-    });
-
-    $('.container').on('click', '#btnUpload', function () {
-        $uploader.upload();
     });
 
     // 为表单加入检测功能：当required的元素blur时校验，并弹出错误提示
@@ -92,7 +109,9 @@ $(function () {
 
     // tab
     $('.weui_tab').tab({
-        defaultIndex: 1
+        onToggle: function (index) {
+            console.log('tab onToggle', index);
+        }
     });
 
     // searchBar
@@ -127,6 +146,6 @@ $(function () {
         }
     });
 
-    //FastClick.attach(document.body);
+    FastClick.attach(document.body);
 });
 

@@ -1,5 +1,5 @@
 /*!
- * WeUI.js v0.2.0 (https://github.com/progrape/weui.js)
+ * WeUI.js v0.2.1 (https://github.com/progrape/weui.js)
  * Copyright 2016
  * Licensed under the MIT license
  */
@@ -7,7 +7,7 @@
 
 (function ($) {
     $.weui = {
-        version: '0.2.0'
+        version: '0.2.1'
     };
 
     $.noop = $.noop || function () {};
@@ -108,7 +108,7 @@
     /**
      * show top tips
      * @param {String} content
-     * @param {Object|Number} [options]
+     * @param {Object|Number|Function} [options]
      */
     $.weui.topTips = function () {
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'topTips' : arguments[0];
@@ -127,14 +127,23 @@
             };
         }
 
+        if (typeof options === 'function') {
+            options = {
+                callback: options
+            };
+        }
+
         options = $.extend({
-            duration: 3000
+            duration: 3000,
+            callback: $.noop
         }, options);
         var html = '<div class="weui_toptips weui_warn">' + content + '</div>';
         $topTips = $(html);
         $topTips.appendTo($('body'));
         if (typeof $topTips.slideDown === 'function') {
             $topTips.slideDown(20);
+        } else {
+            $topTips.show();
         }
 
         timer = setTimeout(function () {
@@ -143,10 +152,12 @@
                     $topTips.slideUp(120, function () {
                         $topTips.remove();
                         $topTips = null;
+                        options.callback();
                     });
                 } else {
                     $topTips.remove();
                     $topTips = null;
+                    options.callback();
                 }
             }
         }, options.duration);
@@ -465,7 +476,8 @@
     $.fn.tab = function (options) {
         options = $.extend({
             defaultIndex: 0,
-            activeClass: 'weui_bar_item_on'
+            activeClass: 'weui_bar_item_on',
+            onToggle: $.noop
         }, options);
         var $tabbarItems = this.find('.weui_tabbar_item, .weui_navbar_item');
         var $tabBdItems = this.find('.weui_tab_bd_item');
@@ -476,6 +488,8 @@
 
             var $defaultTabBdItem = $tabBdItems.eq(index);
             $defaultTabBdItem.show().siblings().hide();
+
+            options.onToggle(index);
         };
         var self = this;
 
@@ -499,7 +513,7 @@
     /**
      * show toast
      * @param {String} content
-     * @param {Object|Number} options
+     * @param {Object|Number} [options]
      */
     $.weui.toast = function () {
         var content = arguments.length <= 0 || arguments[0] === undefined ? 'toast' : arguments[0];
@@ -512,9 +526,17 @@
             };
         }
 
+        if (typeof options === 'function') {
+            options = {
+                callback: options
+            };
+        }
+
         options = $.extend({
-            duration: 3000
+            duration: 3000,
+            callback: $.noop
         }, options);
+
         var html = '<div>\n            <div class="weui_mask_transparent"></div>\n            <div class="weui_toast">\n                <i class="weui_icon_toast"></i>\n                <p class="weui_toast_content">' + content + '</p>\n            </div>\n        </div>';
         var $toast = $(html);
         $('body').append($toast);
@@ -522,6 +544,7 @@
         setTimeout(function () {
             $toast.remove();
             $toast = null;
+            options.callback();
         }, options.duration);
     };
 })($);
