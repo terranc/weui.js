@@ -62,13 +62,13 @@ $(function () {
         auto: false,
         url: '/example/index.html',
         onAddedFile: function (file) {
-            console.log(file);
+            console.log('file add');
         },
         onSuccess: function (res) {
-            console.log(res);
+            console.log('success', res);
         },
         onError: function (err) {
-            console.warn(err);
+            console.warn('error', err);
         }
     });
 
