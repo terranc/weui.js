@@ -713,6 +713,11 @@
                         if (options.auto) {
                             upload({ name: file.name, blob: blob }, blobs.length - 1);
                         }
+
+                        // 如果数量达到最大, 隐藏起选择文件按钮
+                        if (blobs.length >= options.maxCount) {
+                            $uploader.find('.weui_uploader_input_wrp').hide();
+                        }
                     };
 
                     img.src = e.target.result;
@@ -745,6 +750,11 @@
             $preview.remove();
             blobs.splice(index, 1);
             options.onRemovedfile(index);
+
+            // 如果数量达到最大, 隐藏起选择文件按钮
+            if (blobs.length < options.maxCount) {
+                $uploader.find('.weui_uploader_input_wrp').show();
+            }
         };
 
         return this;

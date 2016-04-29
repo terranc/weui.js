@@ -69,6 +69,9 @@ $(function () {
         },
         onError: function (err) {
             console.warn('error', err);
+        },
+        onComplete: function (){
+            console.log('complete');
         }
     });
 
