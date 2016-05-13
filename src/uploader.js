@@ -91,8 +91,7 @@
          */
         function upload(file, index) {
             const fd = new FormData();
-            fd.append('filename', file.name);
-            fd.append('data', file.blob);
+            fd.append('file', file.blob, file.name);
             $.ajax({
                 type: options.method,
                 url: options.url,
