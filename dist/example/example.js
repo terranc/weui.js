@@ -59,8 +59,7 @@ $(function () {
 
     var $uploader = $('#uploader').uploader({
         maxCount: 4,
-        auto: false,
-        url: '/example/index.html',
+        url: 'http://localhost:3000/upload',
         onAddedFile: function (file) {
             console.log('file add');
         },
@@ -72,11 +71,10 @@ $(function () {
         },
         onComplete: function (){
             console.log('complete');
+        },
+        onRemovedfile: function (index){
+            console.log('file remove', index);
         }
-    });
-
-    $('.container').on('click', '#btnUpload', function () {
-        $uploader.upload();
     });
 
     // 为表单加入检测功能：当required的元素blur时校验，并弹出错误提示

@@ -561,7 +561,8 @@
             maxCount: 4,
             compress: true,
             maxWidth: 500,
-            auto: false,
+            auto: true,
+            field: 'file',
             url: '/upload.php',
             method: 'POST',
             accept: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif'],
@@ -633,8 +634,7 @@
          */
         function upload(file, index) {
             var fd = new FormData();
-            fd.append('filename', file.name);
-            fd.append('data', file.blob);
+            fd.append(options.field, file.blob, file.name);
             $.ajax({
                 type: options.method,
                 url: options.url,
