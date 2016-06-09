@@ -1,3 +1,15 @@
+#### v0.3.0 (2016-06-08)
+
+- 【改进】优化 uploader 上传组件
+- 【改进】添加 vConsole 调试面板
+- 【改进】tab/toast/loading 增加回调方法
+
+详情参考:
+
+- [542ba48](https://github.com/progrape/weui.js/commit/542ba48) optimize uploader
+- [7aedddb](https://github.com/progrape/weui.js/commit/7aedddb) add vConsole to debug
+- [1eda23b](https://github.com/progrape/weui.js/commit/1eda23b) add callback function to tab/toast/loading
+
 #### v0.2.1 (2016-04-19)
 
 - 【修复】修复 zepto v1.1.6 下无法关闭 dailog 的 bug
