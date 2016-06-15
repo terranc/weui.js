@@ -6,6 +6,10 @@
      * @param {String} content
      */
     $.weui.loading = function (content = 'loading...') {
+        if ($loading) {
+            return;
+        }
+
         const html = `<div class="weui_loading_toast">
         <div class="weui_mask_transparent"></div>
         <div class="weui_toast">
