@@ -60,4 +60,12 @@
         }, options.duration);
     };
 
+
+    /**
+     * hide topTips
+     */
+    $.weui.hideTopTips = function () {
+        $topTips && $topTips.remove();
+        $topTips = null;
+    };
 })($);

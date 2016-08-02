@@ -37,4 +37,12 @@ describe('topTips', function () {
             done();
         }, duration + 1000); // waiting for slideUp
     });
+
+    it('should close after when $.weui.hideTopTips', function () {
+        $.weui.topTips();
+        var $topTips = $('.weui_toptips');
+        expect($topTips.length).not.to.be(0);
+        $.weui.hideTopTips();
+        expect($('.weui_toptips').length).to.be(0);
+    });
 });
