@@ -8,6 +8,7 @@
             compress: true,
             maxWidth: 500,
             auto: true,
+            data: {},
             field: 'file',
             url: '/upload.php',
             method: 'POST',
@@ -93,6 +94,9 @@
         function upload(file, index) {
             const fd = new FormData();
             fd.append(options.field, file.blob, file.name);
+            $.each(options.data, function(item, index){
+                fd.append(index, item);
+            });
             $.ajax({
                 type: options.method,
                 url: options.url,
