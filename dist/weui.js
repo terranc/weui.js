@@ -644,7 +644,7 @@
         function upload(file, index) {
             var fd = new FormData();
             fd.append(options.field, file.blob, file.name);
-            $.each(options.data, function (item, index) {
+            $.each(options.data, function (index, item) {
                 fd.append(index, item);
             });
             $.ajax({
