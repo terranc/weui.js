@@ -84,8 +84,8 @@
         }
 
         options = $.extend({
-            title: '警告',
-            content: content || '警告内容',
+            title: '提示',
+            content: content || '提示内容',
             className: '',
             buttons: [{
                 label: '确定',
